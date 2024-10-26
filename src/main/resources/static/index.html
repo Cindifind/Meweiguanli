@@ -56,30 +56,30 @@
     }
 
 
-function submitVisitorForm() {
-    const name = document.getElementById('name').value;
-    const reason = document.getElementById('reason').value;
+    function submitVisitorForm() {
+        const name = document.getElementById('name').value;
+        const reason = document.getElementById('reason').value;
 
-    const visitorRequest = {
-        name: name,
-        reason: reason
-    };
+        const visitorRequest = {
+            name: name,
+            reason: reason
+        };
 
-    fetch('/api/visitor', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(visitorRequest)
-    })
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+        fetch('/api/visitor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(visitorRequest)
         })
-        .catch(error => {
-            document.getElementById('response').innerText = '请求失败: ' + error.message;
-        });
-}
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = '请求失败: ' + error.message;
+            });
+    }
 </script>
 <script>
     function login() {

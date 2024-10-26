@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.dao.VisitorDAO;
+import com.example.demo.model.Result;
 import com.example.demo.model.Visitor;
 import com.example.demo.model.VisitorRequest;
-import com.example.demo.model.VisitorResponse;
+import com.example.demo.service.VisitorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,21 +17,36 @@ import org.springframework.web.bind.annotation.RestController;
 public class VisitorController {
 
     @Autowired
-    private VisitorDAO visitorDAO;
+    private VisitorService visitorService;
 
     /**
      * 添加访客
      */
     @PostMapping("/api/visitor")
-    public VisitorResponse addVisitor(@RequestBody VisitorRequest request) {
+    public Result addVisitor(@RequestBody VisitorRequest request) {
         Visitor visitor = new Visitor(request.getName(), request.getReason());
-        visitorDAO.insertVisitor(visitor);
+        visitorService.addVisitor(visitor);
 
-        VisitorResponse response = new VisitorResponse();
-        response.setStatus("success");
-        response.setMessage("数据插入成功");
-        response.setData(visitor);
+        return Result.ADD_VISITOR_SUCCESS;
+    }
 
-        return response;
+    @PostMapping("/api/remove-visitor")
+    public Result removeVisitorById(@Param(value = "id") int id) {
+        return visitorService.removeVisitorById(id);
+    }
+
+    @PostMapping("/api/remove-visitor-name")
+    public Result removeVisitorByName(@Param(value = "name") String name) {
+        return visitorService.removeVisitorsByName(name);
+    }
+
+    @PostMapping("/api/query-visitor")
+    public Result queryVisitor(@Param(value = "id") int id) {
+        return visitorService.getVisitor(id, false);
+    }
+
+    @PostMapping("/api/query-visitor-all")
+    public Result queryVisitors() {
+        return visitorService.getVisitors(false);
     }
 }

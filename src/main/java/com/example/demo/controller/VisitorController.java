@@ -9,12 +9,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 控制层 访客登录类，用于访客登录调用
+ */
 @RestController
 public class VisitorController {
 
     @Autowired
     private VisitorDAO visitorDAO;
 
+    /**
+     * 添加访客
+     */
     @PostMapping("/api/visitor")
     public VisitorResponse addVisitor(@RequestBody VisitorRequest request) {
         Visitor visitor = new Visitor(request.getName(), request.getReason());

@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class VisitorController {
 
-    @Autowired
-    private VisitorDAO visitorDAO;
+    private final VisitorDAO visitorDAO;
+
+    public VisitorController(VisitorDAO visitorDAO) {
+        this.visitorDAO = visitorDAO;
+    }
 
     /**
      * 添加访客

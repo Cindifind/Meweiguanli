@@ -1,34 +1,36 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.User;
-import com.example.demo.repository.UserRepository;
+import com.example.demo.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
-/**
- * 控制层 用户登录
- */
 @RestController
 public class LoginController {
-    private final UserRepository userRepository;
 
-    public LoginController(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
-    /**
-     * 登录
-     */
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+
     @PostMapping("/api/login")
     public String login(@RequestBody User user) {
-        Optional<User> foundUser = userRepository.findByUsername(user.getUsername());
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+            );
 
-        if (foundUser.isPresent() && foundUser.get().getPassword().equals(user.getPassword())) {
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
             return "Login successful!";
-        } else {
+        } catch (Exception e) {
             return "Invalid username or password.";
         }
     }

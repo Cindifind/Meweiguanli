@@ -22,21 +22,17 @@ public class VisitorDAOImpl implements VisitorDAO {
     @Override
     public void insertVisitor(Visitor visitor) {
         String sql = "INSERT INTO visitors (name, reason) VALUES (?, ?)";
-
         try {
             Connection connection = ManageConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-
             preparedStatement.setString(1, visitor.getName());
             preparedStatement.setString(2, visitor.getReason());
-
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("数据插入成功");
             } else {
                 System.out.println("数据插入失败");
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -48,7 +44,6 @@ public class VisitorDAOImpl implements VisitorDAO {
      * @param id 根据ID删除访客
      * @return 返回成功还是失败
      */
-
     @Override
     public Boolean deleteById(int id) {
         //sql
@@ -66,16 +61,13 @@ public class VisitorDAOImpl implements VisitorDAO {
             throw new RuntimeException(e);
         }
     }
-
     /**
      * @return 返回所有访客 包括 del=1
      */
-
     @Override
     public List<Visitor> selectAll() {
         return List.of();
     }
-
     /**
      * 根据id查询访客信息
      *

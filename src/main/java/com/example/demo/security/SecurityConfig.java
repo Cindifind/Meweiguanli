@@ -14,7 +14,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/login", "/api/login","/index.html","/api/visitor").permitAll()  // 允许匿名访问登录相关路径
+                        .requestMatchers("/login", "/api/login","/index.html","/api/visitor","/api/example","/api/example/**").permitAll()  // 允许匿名访问登录相关路径
                         .requestMatchers("/api/logout").permitAll()
                         .requestMatchers("/api/user").hasRole("USER")
                         .requestMatchers("/api/admin").hasRole("users")

@@ -1,50 +1,22 @@
+
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>用户登录</title>
 </head>
 <body>
-<h2>Login</h2>
-<form id="loginForm">
-    <label for="username">Username:</label>
+<h1>用户登录</h1>
+<form th:action="@{/login}" method="post">
+    <label for="username">用户名:</label>
     <input type="text" id="username" name="username" required><br><br>
-    <label for="password">Password:</label>
+
+    <label for="password">密码:</label>
     <input type="password" id="password" name="password" required><br><br>
-    <button type="submit">Login</button>
+
+    <button type="submit">登录</button>
 </form>
 
-<div id="response"></div>
-
-<script>
-    document.getElementById('loginForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const username = document.getElementById('username').value;
-        const password = document.getElementById('password').value;
-
-        const user = {
-            username: username,
-            password: password
-        };
-
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('response').innerText = data;
-                window.location.href = 'text.html';
-            })
-            .catch(error => {
-                document.getElementById('response').innerText = 'An error occurred: ' + error;
-            });
-    });
-</script>
+<div id="result"></div>
 </body>
 </html>

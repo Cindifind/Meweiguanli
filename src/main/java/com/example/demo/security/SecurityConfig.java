@@ -25,13 +25,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/**",  "/**/**","index.html","/***/***/**").permitAll()
-                        .requestMatchers("/login.html").permitAll()
-                        .requestMatchers("/**").hasRole("ADMIN")
+                        .requestMatchers("/index.html", "/login.html").permitAll()
+                        .requestMatchers("/login", "/api/login", "/api/visitor").permitAll()
+                        .requestMatchers("/manage.html","/api/data/active").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/text.html", true)  // 登录成功后跳转到 /text.html
+                        .loginPage("/login.html")  // 指定登录页面
+                        .defaultSuccessUrl("/manage.html", true)  // 登录成功后跳转到 /manage.html
                         .permitAll()
                 )
                 .logout(LogoutConfigurer::permitAll)

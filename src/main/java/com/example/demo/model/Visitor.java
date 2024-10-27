@@ -17,24 +17,19 @@ public class Visitor {
         this.del = "0";
         this.created_at = new Date();
     }
-    public String getName() {
-        return name;
-    }
     public String getCarID() {
         return carID;
     }
-    public String getDel() {
-        return del;
+    public void setCarID(String carID) {
+        this.carID = carID;
+    }public String getName() {
+        return name;
     }
-    public String getCreated_at() {
-        return created_at.toString();
-    }
+
     public void setName(String name) {
         this.name = name;
     }
-    public void SetCarID(String carID) {
-        this.name = carID;
-    }
+
     public String getReason() {
         return reason;
     }
@@ -43,6 +38,20 @@ public class Visitor {
         this.reason = reason;
     }
 
+    public String getDel() {
+        return del;
+    }
+
+    public void setDel(String del) {
+        this.del = del;
+    }
+
+
+
+
+    public String getCreated_at() {
+        return created_at.toString();
+    }
     @Override
     public String toString() {
         return "Visitor{" +

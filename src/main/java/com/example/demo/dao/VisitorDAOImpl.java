@@ -12,15 +12,20 @@ import java.sql.SQLException;
 public class VisitorDAOImpl implements VisitorDAO {
     @Override
     public void insertVisitor(Visitor visitor) {
-        String sql = "INSERT INTO visitors (name,reason,del,created_at,carID) VALUES (?, ?, ?,?,?)";
+        String sql = "INSERT INTO visitors (name, reason, del, created_at, carid) VALUES (?, ?, ?, ?, ?)";
         try {
             Connection connection = ManageConnection.getConnection();
+            if (connection == null) {
+                System.err.println("无法获取数据库连接");
+                return;
+            }
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1,visitor.getName());
-            preparedStatement.setString(2,visitor.getReason());
-            preparedStatement.setString(3,visitor.getDel());
-            preparedStatement.setString(4,visitor.getCreated_at());
-            preparedStatement.setString(5,visitor.getCarID());
+            preparedStatement.setString(1, visitor.getName());
+            preparedStatement.setString(2, visitor.getReason());
+            preparedStatement.setString(3, visitor.getDel());
+            preparedStatement.setString(4, visitor.getCreated_at());
+            preparedStatement.setString(5, visitor.getCarID());
+            System.out.println(visitor.getCarID());
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("数据插入成功");

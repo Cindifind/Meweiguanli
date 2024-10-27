@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据展示</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<h1>数据展示</h1>
+<table id="data-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>GA</th>
+        <th>OAAA</th>
+        <th>Created At</th>
+        <th>Name</th>
+        <th>Reason</th>
+        <th>Car ID</th>
+    </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('/api/data/active')
+            .then(response => response.json())
+            .then(data => {
+                const tableBody = document.querySelector('#data-table tbody');
+                tableBody.innerHTML = ''; // 清空表格内容
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.ga}</td>
+                            <td>${item.oaaa}</td>
+                            <td>${item.created_at}</td>
+                            <td>${item.name}</td>
+                            <td>${item.reason}</td>
+                            <td>${item.carID}</td>
+                        `;
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    });
+</script>
+</body>
+</html>

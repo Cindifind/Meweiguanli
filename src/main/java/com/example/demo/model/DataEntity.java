@@ -14,11 +14,12 @@ public class DataEntity {
     private String created_at;
     private Integer GA;
     private Integer OAAA;
+    private String carID;
 
     public DataEntity() {
     }
 
-    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA) {
+    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA, String carID) {
         this.id = id;
         this.name = name;
         this.del = del;
@@ -26,6 +27,7 @@ public class DataEntity {
         this.created_at = created_at;
         this.GA = GA;
         this.OAAA = OAAA;
+        this.carID = carID;
     }
 
     /**
@@ -141,7 +143,23 @@ public class DataEntity {
     }
 
     public String toString() {
-        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + "}";
+        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + "carID="+carID+"}";
+    }
+
+    /**
+     * 获取
+     * @return carID
+     */
+    public String getCarID() {
+        return carID;
+    }
+
+    /**
+     * 设置
+     * @param carID
+     */
+    public void setCarID(String carID) {
+        this.carID = carID;
     }
 
     // Getters and Setters

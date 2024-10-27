@@ -23,14 +23,19 @@
 
     </div>
 </section>
-<h1>欢迎访问我们的网站</h1>
+<h1>访客表单</h1>
 <form id="visitorForm">
     <label for="name">姓名:</label>
     <input type="text" id="name" name="name" required><br><br>
+
     <label for="reason">访问原因:</label>
-    <input type="text" id="reason" name="reason" required><br><br>
-    <button type="submit">提交</button>
+    <textarea id="reason" name="reason" required></textarea><br><br>
+
+    <button type="button" onclick="submitVisitorForm()">提交</button>
 </form>
+
+<div id="response"></div>
+
 <h1>Update DEL Value</h1>
 <button onclick="updateDELValue(20)">Update DEL Value for ID 20</button>
 <p id="result"></p>
@@ -64,7 +69,6 @@
             name: name,
             reason: reason
         };
-
         fetch('/api/visitor', {
             method: 'POST',
             headers: {

@@ -1,10 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>访客表单</title>
 </head>
 <body>
+<h1>访客表单</h1>
+<form id="visitorForm">
+    <label for="name">姓名:</label>
+    <input type="text" id="name" name="name" required><br><br>
 
+    <label for="reason">访问原因:</label>
+    <textarea id="reason" name="reason" required></textarea><br><br>
+
+    <button type="button" onclick="submitVisitorForm()">提交</button>
+</form>
+
+<div id="response"></div>
+
+<script>
+    function submitVisitorForm() {
+        const name = document.getElementById('name').value;
+        const reason = document.getElementById('reason').value;
+
+        const visitorRequest = {
+            name: name,
+            reason: reason
+        };
+
+        fetch('/api/visitor', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(visitorRequest)
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = '请求失败: ' + error.message;
+            });
+    }
+</script>
 </body>
 </html>

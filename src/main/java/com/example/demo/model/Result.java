@@ -8,20 +8,8 @@ package com.example.demo.model;
  */
 
 public enum Result {
-    LOGIN_SUCCESS(201, "登录成功"),
-    ADD_VISITOR_SUCCESS(202, "添加访客成功"),
-    REMOVE_VISITOR_SUCCESS(203, "删除访客成功"),
-    BATCH_REMOVE_VISITOR_SUCCESS(204, "批量删除访客成功"),
-    QUERY_VISITOR_SUCCESS(205, "查询访客成功"),
-    BATCH_QUERY_VISITOR_SUCCESS(206, "批量查询访客成功"),
 
-
-    //错误常量
-    PASSWORD_ERROR(301, "密码错误"),
-    VISITOR_NOT_EXIST_ERROR(302, "访客不存在"),
-    REMOVE_VISITOR_ERROR(303, "删除访客失败,访客可能不存在"),
-    ;
-
+    ADD_VISITOR_SUCCESS(202, "添加访客成功");
     private final Integer status;
     private final String message;
     private Object object;

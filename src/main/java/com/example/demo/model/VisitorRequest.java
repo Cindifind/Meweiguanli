@@ -3,6 +3,8 @@ package com.example.demo.model;
 public class VisitorRequest {
     private String name;
     private String reason;
+    private String carID;
+
 
     public String getName() {
         return name;
@@ -18,5 +20,25 @@ public class VisitorRequest {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    /**
+     * 获取
+     * @return carID
+     */
+    public String getCarID() {
+        return carID;
+    }
+
+    /**
+     * 设置
+     * @param carID
+     */
+    public void setCarID(String carID) {
+        this.carID = carID;
+    }
+
+    public String toString() {
+        return "VisitorRequest{name = " + name + ", reason = " + reason + ", carID = " + carID + "}";
     }
 }

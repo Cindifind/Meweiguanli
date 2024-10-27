@@ -13,7 +13,7 @@ public class ExampleController {
     @Autowired
     private ExampleService exampleService;
 
-    @DeleteMapping("/api/example/{id}")
+    @DeleteMapping("/api/del/{id}")
     public ResultConst deleteVisitor(@PathVariable("id") int id) {
         exampleService.updateDelValue(id);
         return ResultConst.success();

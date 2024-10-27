@@ -1,48 +1,75 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>访客表单</title>
+    <title>查询活跃访客</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
-<h1>访客表单</h1>
-<form id="visitorForm">
-    <label for="name">姓名:</label>
-    <input type="text" id="name" name="name" required><br><br>
-
-    <label for="reason">访问原因:</label>
-    <textarea id="reason" name="reason" required></textarea><br><br>
-
-    <button type="button" onclick="submitVisitorForm()">提交</button>
-</form>
-
-<div id="response"></div>
+<h1>查询活跃访客</h1>
+<button onclick="fetchActiveVisitors()">获取数据</button>
+<div id="data-container">
+    <table id="data-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>GA</th>
+            <th>OAAA</th>
+            <th>创建时间</th>
+            <th>DEL</th>
+            <th>姓名</th>
+            <th>原因</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
 
 <script>
-    function submitVisitorForm() {
-        const name = document.getElementById('name').value;
-        const reason = document.getElementById('reason').value;
+    async function fetchActiveVisitors() {
+        try {
+            const response = await fetch('/api/data/active');
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            const data = await response.json();
+            displayData(data);
+        } catch (error) {
+            console.error('There was a problem with the fetch operation:', error);
+        }
+    }
 
-        const visitorRequest = {
-            name: name,
-            reason: reason
-        };
-
-        fetch('/api/visitor', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(visitorRequest)
-        })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
-            })
-            .catch(error => {
-                document.getElementById('response').innerText = '请求失败: ' + error.message;
-            });
+    function displayData(data) {
+        const tbody = document.querySelector('#data-table tbody');
+        tbody.innerHTML = ''; // 清空现有数据
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                    <td>${item.id}</td>
+                    <td>${item.ga}</td>
+                    <td>${item.oaaa}</td>
+                    <td>${item.createdAt}</td>
+                    <td>${item.del}</td>
+                    <td>${item.name}</td>
+                    <td>${item.reason}</td>
+                `;
+            tbody.appendChild(row);
+        });
     }
 </script>
 </body>

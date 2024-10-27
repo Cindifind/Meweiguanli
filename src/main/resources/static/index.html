@@ -27,9 +27,11 @@
 <form id="visitorForm">
     <label for="name">姓名:</label>
     <input type="text" id="name" name="name" required><br><br>
-
     <label for="reason">访问原因:</label>
     <textarea id="reason" name="reason" required></textarea><br><br>
+    <label for="reason">访问原因:</label>
+    <textarea id="carID" name="carID" required></textarea><br><br>
+
 
     <button type="button" onclick="submitVisitorForm()">提交</button>
 </form>
@@ -37,12 +39,12 @@
 <div id="response"></div>
 
 <h1>Update DEL Value</h1>
-<button onclick="updateDELValue(20)">Update DEL Value for ID 20</button>
+<button onclick="updateDELValue(4)">Update DEL Value for ID 20</button>
 <p id="result"></p>
 <script>
     async function updateDELValue(id) {
         try {
-            const response = await fetch(`/api/example/${id}`, {
+            const response = await fetch(`/api/del/${id}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json'
@@ -64,10 +66,12 @@
     function submitVisitorForm() {
         const name = document.getElementById('name').value;
         const reason = document.getElementById('reason').value;
+        const carID = document.getElementById('carID').value;
 
         const visitorRequest = {
             name: name,
-            reason: reason
+            reason: reason,
+            carID: carID
         };
         fetch('/api/visitor', {
             method: 'POST',

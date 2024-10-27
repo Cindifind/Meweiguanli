@@ -13,5 +13,12 @@ public class ExampleService {
     public void updateDelValue(Integer id) {
         exampleRepository.updateDelValueById(id);
     }
-}
 
+    public void updateGaValue(Integer id, Integer value) {
+        exampleRepository.updateGaValueById(id, value);
+    }
+
+    public void updateOaaaValue(Integer id, Integer value) {
+        exampleRepository.updateOaaaValueById(id, value);
+    }
+}

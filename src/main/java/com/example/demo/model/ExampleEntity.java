@@ -13,6 +13,12 @@ public class ExampleEntity {
     @Column(name = "DEL")
     private Integer del;
 
+    @Column(name = "GA")
+    private Integer ga;
+
+    @Column(name = "OAAA")
+    private Integer oaaa;
+
     // Getters and Setters
     public Integer getId() {
         return id;
@@ -28,5 +34,21 @@ public class ExampleEntity {
 
     public void setDel(Integer del) {
         this.del = del;
+    }
+
+    public Integer getGa() {
+        return ga;
+    }
+
+    public void setGa(Integer ga) {
+        this.ga = ga;
+    }
+
+    public Integer getOaaa() {
+        return oaaa;
+    }
+
+    public void setOaaa(Integer oaaa) {
+        this.oaaa = oaaa;
     }
 }

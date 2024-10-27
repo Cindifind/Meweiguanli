@@ -1,75 +1,118 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>查询活跃访客</title>
-    <style>
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-    </style>
+    <title>Test API Endpoints</title>
 </head>
 <body>
-<h1>查询活跃访客</h1>
-<button onclick="fetchActiveVisitors()">获取数据</button>
-<div id="data-container">
-    <table id="data-table">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>GA</th>
-            <th>OAAA</th>
-            <th>创建时间</th>
-            <th>DEL</th>
-            <th>姓名</th>
-            <th>原因</th>
-        </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-</div>
+<h1>Test API Endpoints</h1>
+<button onclick="updateDELValue(20)">Update DEL Value for ID 20</button>
+<button onclick="updateGaToTrue(20)">Update GA to True for ID 20</button>
+<button onclick="updateGaToFalse(20)">Update GA to False for ID 20</button>
+<button onclick="updateOaaaToTrue(20)">Update OAAA to True for ID 20</button>
+<button onclick="updateOaaaToFalse(20)">Update OAAA to False for ID 20</button>
+<p id="result"></p>
 
 <script>
-    async function fetchActiveVisitors() {
+    async function updateDELValue(id) {
         try {
-            const response = await fetch('/api/data/active');
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
+            const response = await fetch(`/api/del/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('result').innerText = `DEL value for ID ${id} updated successfully: ${JSON.stringify(result)}`;
+            } else {
+                document.getElementById('result').innerText = `Failed to update DEL value for ID ${id}: ${response.status} ${response.statusText}`;
             }
-            const data = await response.json();
-            displayData(data);
         } catch (error) {
-            console.error('There was a problem with the fetch operation:', error);
+            document.getElementById('result').innerText = `Error: ${error.message}`;
         }
     }
 
-    function displayData(data) {
-        const tbody = document.querySelector('#data-table tbody');
-        tbody.innerHTML = ''; // 清空现有数据
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                    <td>${item.id}</td>
-                    <td>${item.ga}</td>
-                    <td>${item.oaaa}</td>
-                    <td>${item.createdAt}</td>
-                    <td>${item.del}</td>
-                    <td>${item.name}</td>
-                    <td>${item.reason}</td>
-                `;
-            tbody.appendChild(row);
-        });
+    async function updateGaToTrue(id) {
+        try {
+            const response = await fetch(`/api/gaT/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('result').innerText = `GA value for ID ${id} updated to True successfully: ${JSON.stringify(result)}`;
+            } else {
+                document.getElementById('result').innerText = `Failed to update GA value for ID ${id}: ${response.status} ${response.statusText}`;
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function updateGaToFalse(id) {
+        try {
+            const response = await fetch(`/api/gaF/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('result').innerText = `GA value for ID ${id} updated to False successfully: ${JSON.stringify(result)}`;
+            } else {
+                document.getElementById('result').innerText = `Failed to update GA value for ID ${id}: ${response.status} ${response.statusText}`;
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function updateOaaaToTrue(id) {
+        try {
+            const response = await fetch(`/api/oaaaT/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('result').innerText = `OAAA value for ID ${id} updated to True successfully: ${JSON.stringify(result)}`;
+            } else {
+                document.getElementById('result').innerText = `Failed to update OAAA value for ID ${id}: ${response.status} ${response.statusText}`;
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error.message}`;
+        }
+    }
+
+    async function updateOaaaToFalse(id) {
+        try {
+            const response = await fetch(`/api/oaaaF/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                document.getElementById('result').innerText = `OAAA value for ID ${id} updated to False successfully: ${JSON.stringify(result)}`;
+            } else {
+                document.getElementById('result').innerText = `Failed to update OAAA value for ID ${id}: ${response.status} ${response.statusText}`;
+            }
+        } catch (error) {
+            document.getElementById('result').innerText = `Error: ${error.message}`;
+        }
     }
 </script>
 </body>

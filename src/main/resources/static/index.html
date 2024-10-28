@@ -17,6 +17,9 @@
     <label for="carID">车牌号:</label>
     <input type="text" id="carID" name="carID"><br><br>
 
+    <label for="carID">手机号:</label>
+    <input type="text" id="phonenum" name="phonenum"><br><br>
+
     <button type="submit">提交</button>
 </form>
 
@@ -29,11 +32,12 @@
         const name = document.getElementById('name').value;
         const reason = document.getElementById('reason').value;
         const carID = document.getElementById('carID').value;
-
+        const phonenum = document.getElementById('phonenum').value;
         const visitorRequest = {
             name: name,
             carID: carID,
             reason: reason,
+            phonenum: phonenum,
         };
 
         fetch('/api/visitor', {

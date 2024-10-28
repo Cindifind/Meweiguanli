@@ -12,7 +12,7 @@ import java.sql.SQLException;
 public class VisitorDAOImpl implements VisitorDAO {
     @Override
     public void insertVisitor(Visitor visitor) {
-        String sql = "INSERT INTO visitors (name, reason, del, created_at, carid) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO visitors (name, reason, del, created_at, carid,phonenum) VALUES (?, ?, ?, ?, ? ,?)";
         try {
             Connection connection = ManageConnection.getConnection();
             if (connection == null) {
@@ -25,7 +25,8 @@ public class VisitorDAOImpl implements VisitorDAO {
             preparedStatement.setString(3, visitor.getDel());
             preparedStatement.setString(4, visitor.getCreated_at());
             preparedStatement.setString(5, visitor.getCarID());
-            System.out.println(visitor.getCarID());
+            preparedStatement.setString(6, visitor.getPhonenum());
+            System.out.println(visitor.getPhonenum());
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("数据插入成功");

@@ -15,11 +15,12 @@ public class DataEntity {
     private Integer GA;
     private Integer OAAA;
     private String carID;
+    private String phonenum;
 
     public DataEntity() {
     }
 
-    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA, String carID) {
+    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA, String carID, String phonenum) {
         this.id = id;
         this.name = name;
         this.del = del;
@@ -28,6 +29,7 @@ public class DataEntity {
         this.GA = GA;
         this.OAAA = OAAA;
         this.carID = carID;
+        this.phonenum = phonenum;
     }
 
     /**
@@ -142,10 +144,6 @@ public class DataEntity {
         this.OAAA = OAAA;
     }
 
-    public String toString() {
-        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + "carID="+carID+"}";
-    }
-
     /**
      * 获取
      * @return carID
@@ -160,6 +158,26 @@ public class DataEntity {
      */
     public void setCarID(String carID) {
         this.carID = carID;
+    }
+
+    /**
+     * 获取
+     * @return phonenum
+     */
+    public String getPhonenum() {
+        return phonenum;
+    }
+
+    /**
+     * 设置
+     * @param phonenum
+     */
+    public void setPhonenum(String phonenum) {
+        this.phonenum = phonenum;
+    }
+
+    public String toString() {
+        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + ", carID = " + carID + ", phonenum = " + phonenum + "}";
     }
 
     // Getters and Setters

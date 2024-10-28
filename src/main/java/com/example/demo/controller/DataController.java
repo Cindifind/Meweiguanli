@@ -15,9 +15,13 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-    @GetMapping("/active")
-    public List<DataEntity> getActiveData() {
+    @GetMapping("/activeOAAA")
+    public List<DataEntity> getOAAAData() {
         return dataService.findActiveData();
+    }
+    @GetMapping("/activeGA")
+    public List<DataEntity> getGAData() {
+        return dataService.findActive1Data();
     }
 }
 

@@ -15,4 +15,7 @@ public class DataService {
     public List<DataEntity> findActiveData() {
         return dataRepository.findByDelNot(1);
     }
+    public List<DataEntity> findActive1Data() {
+        return dataRepository.findByOAAAAndDel(0,0);
+    }
 }

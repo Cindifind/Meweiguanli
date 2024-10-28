@@ -20,24 +20,27 @@ public class SecurityConfig {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private CustomAuthenticationSuccessHandler customAuthenticationSuccessHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/index.html", "/login.html").permitAll()
-                        .requestMatchers("/login", "/api/login", "/api/visitor").permitAll()
-                        .requestMatchers("/manage.html","/api/data/active","/api/oaaaT/**","/api/oaaaF/**","api/del/**").hasRole("ADMIN")
-                        .anyRequest().authenticated()
+                        .requestMatchers("/login", "/api/login").permitAll()
+                        .requestMatchers("/manage.html","/api/oaaaT/**","/api/oaaaF/**","api/data/activeOAAA").hasRole("ADMIN")
+                        .requestMatchers("/DA.html","/api/gaT/**","/api/gaF/**","api/data/activeGA").hasRole("USER")
+                        .anyRequest().authenticated() //
                 )
                 .formLogin(form -> form
                         .loginPage("/login.html")  // 指定登录页面
-                        .defaultSuccessUrl("/manage.html", true)  // 登录成功后跳转到 /manage.html
-                        .permitAll()
+                        .successHandler(customAuthenticationSuccessHandler)  // 使用自定义的成功处理器
+                        .permitAll() // 允许所有用户访问登录页面
                 )
-                .logout(LogoutConfigurer::permitAll)
-                .csrf(AbstractHttpConfigurer::disable)
-                .authenticationManager(authenticationManager);
+                .logout(LogoutConfigurer::permitAll) // 允许所有用户退出登录
+                .csrf(AbstractHttpConfigurer::disable) // 禁用CSRF保护
+                .authenticationManager(authenticationManager); // 设置自定义的AuthenticationManager
         return http.build();
     }
 

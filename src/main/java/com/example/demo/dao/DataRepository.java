@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface DataRepository extends JpaRepository<DataEntity, Long> {
     List<DataEntity> findByDelNot(Integer del);
+    List<DataEntity> findByOAAAAndDel(Integer OAAA, Integer del);
 }

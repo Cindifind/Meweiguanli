@@ -1,10 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AD 请求示例</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-dawda
+<div class="container">
+    <h1>AD 请求示例</h1>
+
+    <div class="form-group">
+        <label for="message">Message:</label>
+        <input type="text" id="message" placeholder="输入消息">
+    </div>
+
+    <button onclick="getAd()">获取 AD</button>
+    <button onclick="setAd()">设置 AD</button>
+
+    <div class="response" id="response"></div>
+</div>
+
+<script>
+    function getAd() {
+        fetch('https://localhost:8080/api/GetAd')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerText = JSON.stringify(data, null, 2);
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = '请求失败: ' + error;
+            });
+    }
+
+    function setAd() {
+        const message = document.getElementById('message').value;
+        const ad = { message };
+
+        fetch('https://localhost:8080/api/SetAd', {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ad)
+        })
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('response').innerText = '设置成功';
+                } else {
+                    document.getElementById('response').innerText = '设置失败: ' + response.status;
+                }
+            })
+            .catch(error => {
+                document.getElementById('response').innerText = '请求失败: ' + error;
+            });
+    }
+</script>
 </body>
 </html>

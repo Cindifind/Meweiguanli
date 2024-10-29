@@ -3,27 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>访客登录测试</title>
+    <title>访客登录测试 & 公告</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .response {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+    </style>
 </head>
 <body>
-<h1>访客登录测试</h1>
-<form id="visitorForm">
-    <label for="name">姓名:</label>
-    <input type="text" id="name" name="name" required><br><br>
+<div class="container">
+    <h1>访客登录测试 & 公告</h1>
 
-    <label for="reason">来访原因:</label>
-    <input type="text" id="reason" name="reason" required><br><br>
+    <form id="visitorForm">
+        <label for="name">姓名:</label>
+        <input type="text" id="name" name="name" required><br><br>
 
-    <label for="carID">车牌号:</label>
-    <input type="text" id="carID" name="carID"><br><br>
+        <label for="reason">来访原因:</label>
+        <input type="text" id="reason" name="reason" required><br><br>
 
-    <label for="carID">手机号:</label>
-    <input type="text" id="phonenum" name="phonenum"><br><br>
+        <label for="carID">车牌号:</label>
+        <input type="text" id="carID" name="carID"><br><br>
 
-    <button type="submit">提交</button>
-</form>
+        <label for="phonenum">手机号:</label>
+        <input type="text" id="phonenum" name="phonenum"><br><br>
 
-<div id="result"></div>
+        <button type="submit">提交</button>
+    </form>
+
+    <div class="response" id="result"></div>
+
+    <div class="response" id="adResponse"></div>
+</div>
 
 <script>
     document.getElementById('visitorForm').addEventListener('submit', function(event) {
@@ -40,7 +84,7 @@
             phonenum: phonenum,
         };
 
-        fetch('/api/visitor', {
+        fetch('https://localhost:8080/api/visitor', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,6 +99,21 @@
                 document.getElementById('result').innerText = '添加失败: ' + error.message;
             });
     });
+
+    function getAd() {
+        fetch('https://localhost:8080/api/GetAd')
+            .then(response => response.json())
+            .then(data => {
+                const message = data.message || '暂无公告';
+                document.getElementById('adResponse').innerText = message;
+            })
+            .catch(error => {
+                document.getElementById('adResponse').innerText = '请求失败: ' + error;
+            });
+    }
+
+    // 页面加载时自动调用 getAd 函数
+    window.onload = getAd;
 </script>
 </body>
 </html>

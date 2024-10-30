@@ -100,7 +100,7 @@
             college: college
         };
 
-        fetch('https://localhost:8080/api/visitor', {
+        fetch('/api/visitor', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -117,7 +117,7 @@
     });
 
     function getAd() {
-        fetch('https://localhost:8080/api/GetAd')
+        fetch('/api/GetAd')
             .then(response => response.json())
             .then(data => {
                 const message = data.message || '暂无公告';

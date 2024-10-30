@@ -15,13 +15,26 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-    @GetMapping("/activeOAAA")
-    public List<DataEntity> getOAAAData() {
-        return dataService.findActiveData();
+    @GetMapping("/InforC")
+    public List<DataEntity> getInforCData() {
+        return dataService.findInforCData();
     }
-    @GetMapping("/activeGA")
-    public List<DataEntity> getGAData() {
-        return dataService.findActive1Data();
+    @GetMapping("/Concierge")
+    public List<DataEntity> getConciergeData() {
+        return dataService.findConciergeData();
     }
+    @GetMapping("/FACC")
+    public List<DataEntity> getActiveData() {
+        return dataService.findFACCData();
+    }
+    @GetMapping("/HumanC")
+    public List<DataEntity> getHumanCData() {
+        return dataService.findHumanCData();
+    }
+    @GetMapping("/GeneralC")
+    public List<DataEntity> getGeneralCData() {
+        return dataService.findGeneralCData();
+    }
+
 }
 

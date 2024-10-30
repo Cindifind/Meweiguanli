@@ -9,15 +9,29 @@ public class Visitor {
     private String carID;
     private Date created_at;
     private String phonenum;
+    private String nameId;
+    private String request_at;
+    private String college;
 
-    public Visitor(String name, String reason ,String carID,String phonenum) {
+    public Visitor(String name, String reason ,String carID,String phonenum,String nameId,String request_at,String college) {
         this.name = name;
         this.reason = reason;
         this.carID = carID;
         this.del = "0";
         this.created_at = new Date();
         this.phonenum = phonenum;
-
+        this.nameId = nameId;
+        this.request_at = request_at;
+        this.college = college;
+    }
+    public String getRequest_at() {
+        return request_at;
+    }
+    public String getCollege() {
+        return college;
+    }
+    public String getNameId() {
+        return nameId;
     }
     public String getCarID() {
         return carID;

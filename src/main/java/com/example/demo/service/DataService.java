@@ -12,10 +12,19 @@ public class DataService {
     @Autowired
     private DataRepository dataRepository;
 
-    public List<DataEntity> findActiveData() {
-        return dataRepository.findByDelNot(1);
+    public List<DataEntity> findInforCData() {
+        return dataRepository.findByDelAndCollege(0,"0");
     }
-    public List<DataEntity> findActive1Data() {
+    public List<DataEntity> findHumanCData() {
+        return dataRepository.findByDelAndCollege(0,"1");
+    }
+    public List<DataEntity> findGeneralCData() {
+        return dataRepository.findByDelAndCollege(0,"2");
+    }
+    public List<DataEntity> findFACCData() {
+        return dataRepository.findByDelAndCollege(0,"3");
+    }
+    public List<DataEntity> findConciergeData() {
         return dataRepository.findByOAAAAndDel(0,0);
     }
 }

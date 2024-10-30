@@ -16,11 +16,12 @@ public class DataEntity {
     private Integer OAAA;
     private String carID;
     private String phonenum;
-
+    private String nameId;
+    private String request_at;
+    private String college;
     public DataEntity() {
     }
-
-    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA, String carID, String phonenum) {
+    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA, String carID, String phonenum, String nameId, String request_at, String college) {
         this.id = id;
         this.name = name;
         this.del = del;
@@ -30,6 +31,9 @@ public class DataEntity {
         this.OAAA = OAAA;
         this.carID = carID;
         this.phonenum = phonenum;
+        this.nameId = nameId;
+        this.request_at = request_at;
+        this.college = college;
     }
 
     /**
@@ -176,10 +180,55 @@ public class DataEntity {
         this.phonenum = phonenum;
     }
 
-    public String toString() {
-        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + ", carID = " + carID + ", phonenum = " + phonenum + "}";
+    /**
+     * 获取
+     * @return nameId
+     */
+    public String getNameId() {
+        return nameId;
     }
 
-    // Getters and Setters
+    /**
+     * 设置
+     * @param nameId
+     */
+    public void setNameId(String nameId) {
+        this.nameId = nameId;
+    }
 
+    /**
+     * 获取
+     * @return request_at
+     */
+    public String getRequest_at() {
+        return request_at;
+    }
+
+    /**
+     * 设置
+     * @param request_at
+     */
+    public void setRequest_at(String request_at) {
+        this.request_at = request_at;
+    }
+
+    /**
+     * 获取
+     * @return college
+     */
+    public String getCollege() {
+        return college;
+    }
+
+    /**
+     * 设置
+     * @param college
+     */
+    public void setCollege(String college) {
+        this.college = college;
+    }
+
+    public String toString() {
+        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + ", carID = " + carID + ", phonenum = " + phonenum + ", nameId = " + nameId + ", request_at = " + request_at + ", college = " + college + "}";
+    }
 }

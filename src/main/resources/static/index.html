@@ -61,6 +61,15 @@
         <label for="phonenum">手机号:</label>
         <input type="text" id="phonenum" name="phonenum"><br><br>
 
+        <label for="nameId">身份证号:</label>
+        <input type="text" id="nameId" name="nameId"><br><br>
+
+        <label for="request_at">访问时间:</label>
+        <input type="text" id="request_at" name="request_at"><br><br>
+
+        <label for="college">所属学院:</label>
+        <input type="text" id="college" name="college"><br><br>
+
         <button type="submit">提交</button>
     </form>
 
@@ -77,11 +86,18 @@
         const reason = document.getElementById('reason').value;
         const carID = document.getElementById('carID').value;
         const phonenum = document.getElementById('phonenum').value;
+        const nameId = document.getElementById('nameId').value;
+        const request_at = document.getElementById('request_at').value;
+        const college = document.getElementById('college').value;
+
         const visitorRequest = {
             name: name,
             carID: carID,
             reason: reason,
             phonenum: phonenum,
+            nameId: nameId,
+            request_at: request_at,
+            college: college
         };
 
         fetch('https://localhost:8080/api/visitor', {

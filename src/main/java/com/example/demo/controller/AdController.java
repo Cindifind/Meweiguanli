@@ -20,5 +20,6 @@ public class AdController {
     public ResponseEntity<Void> setAD(@RequestBody String adJson) {
         this.adJson = adJson;
         return ResponseEntity.noContent().build();
+
     }
 }

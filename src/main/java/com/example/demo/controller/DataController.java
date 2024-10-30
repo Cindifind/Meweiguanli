@@ -31,6 +31,7 @@ public class DataController {
     public List<DataEntity> getHumanCData() {
         return dataService.findHumanCData();
     }
+
     @GetMapping("/GeneralC")
     public List<DataEntity> getGeneralCData() {
         return dataService.findGeneralCData();

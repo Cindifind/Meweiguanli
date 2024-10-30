@@ -1,12 +1,5 @@
 package com.example.demo.model;
 
-/**
- * 返回值常量类
- *
- * @author AfeiB
- * {@code @date}2024/10/26 下午12:32
- */
-
 public enum Result {
 
     ADD_VISITOR_SUCCESS(202, "添加访客成功");
@@ -37,12 +30,4 @@ public enum Result {
         return object;
     }
 
-    /**
-     * @param object 传入对象，给返回值用
-     * @return 返回当前常量
-     */
-    public Result setObject(Object object) {
-        this.object = object;
-        return this;
-    }
 }

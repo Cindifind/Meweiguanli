@@ -35,13 +35,13 @@ public class SecurityConfig {
                 }))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/index.html", "/login.html", "0909.html").permitAll()
-                        .requestMatchers("/login", "/api/login", "/api/GetAd", "/api/SetAd", "/api/visitor").permitAll()
+                        .requestMatchers("/login", "/api/login", "/api/GetAd", "/api/SetAd", "/api/visitor","manage.html","/api/data/activeOAAA").permitAll()
                         .requestMatchers("/manage.html", "/api/oaaaT/**", "/api/oaaaF/**", "/api/data/activeOAAA").hasRole("ADMIN")
                         .requestMatchers("/DA.html", "/api/gaT/**", "/api/gaF/**", "/api/data/activeGA").hasRole("USER")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login.html")  // 指定登录页面
+                        .loginPage("https://localhost:8080/login.html")  // 指定登录页面
                         .successHandler(customAuthenticationSuccessHandler)  // 使用自定义的成功处理器
                         .permitAll() // 允许所有用户访问登录页面
                 )

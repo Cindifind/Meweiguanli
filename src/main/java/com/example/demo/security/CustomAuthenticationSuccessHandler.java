@@ -25,7 +25,7 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .orElseThrow(() -> new IllegalStateException("User must have at least one role"));
 
         if (role.equals("ROLE_ADMIN")) {
-            return "/manage.html";
+            return "/0909.html";
         } else if (role.equals("ROLE_USER")) {
             return "/DA.html";
         } else {

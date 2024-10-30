@@ -35,6 +35,5 @@ public class DataController {
     public List<DataEntity> getGeneralCData() {
         return dataService.findGeneralCData();
     }
-
 }
 

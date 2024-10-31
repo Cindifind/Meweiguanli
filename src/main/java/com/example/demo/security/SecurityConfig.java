@@ -41,7 +41,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("https://localhost:8080/login.html")  // 指定登录页面
+                        .loginPage("/login.html")  // 指定登录页面
                         .successHandler(customAuthenticationSuccessHandler)  // 使用自定义的成功处理器
                         .permitAll() // 允许所有用户访问登录页面
                 )

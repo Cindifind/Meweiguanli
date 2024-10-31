@@ -15,24 +15,24 @@ public class DataController {
     @Autowired
     private DataService dataService;
 
-    @GetMapping("/InforC")
+    @GetMapping("/InforC") //信息
     public List<DataEntity> getInforCData() {
         return dataService.findInforCData();
     }
-    @GetMapping("/Concierge")
+    @GetMapping("/Concierge")//二级
     public List<DataEntity> getConciergeData() {
         return dataService.findConciergeData();
     }
-    @GetMapping("/FACC")
+    @GetMapping("/FACC")//财经
     public List<DataEntity> getActiveData() {
         return dataService.findFACCData();
     }
-    @GetMapping("/HumanC")
+    @GetMapping("/HumanC")//人文
     public List<DataEntity> getHumanCData() {
         return dataService.findHumanCData();
     }
 
-    @GetMapping("/GeneralC")
+    @GetMapping("/GeneralC")//通识
     public List<DataEntity> getGeneralCData() {
         return dataService.findGeneralCData();
     }

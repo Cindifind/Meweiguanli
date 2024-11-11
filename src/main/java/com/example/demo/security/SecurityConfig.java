@@ -34,15 +34,22 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/index.html", "/login.html", "0909.html").permitAll()
-                        .requestMatchers("/login", "/api/login", "/api/GetAd", "/api/SetAd", "/api/visitor","manage.html","/api/data/activeOAAA").permitAll()
-                        .requestMatchers("/manage.html", "/api/oaaaT/**", "/api/oaaaF/**", "/api/data/activeOAAA").hasRole("ADMIN")
-                        .requestMatchers("/DA.html", "/api/gaT/**", "/api/gaF/**", "/api/data/activeGA").hasRole("USER")
+                        .requestMatchers("User.html", "/login.html","index.html").permitAll()
+                        .requestMatchers("/login", "/api/login", "/api/GetAd", "/api/visitor","/api/data/User").permitAll()
+                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/InforC").hasRole("INFORC")
+                        .requestMatchers("/api/gaT/**", "/api/gaF/**", "/api/data/Concierge").hasRole("CONCIERGE")
+                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/HumanC").hasRole("HUMANC")
+                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/FACC").hasRole("FACC")
+                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/GeneralC").hasRole("GENERALC")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login.html")  // 指定登录页面
-                        .successHandler(customAuthenticationSuccessHandler)  // 使用自定义的成功处理器
+                        .loginPage("/login.html") // 指定登录页面的URL
+                        .successHandler(customAuthenticationSuccessHandler)
+                        //登录成功跳转DA.html
+//                        .defaultSuccessUrl("/User.html", true)
+
                         .permitAll() // 允许所有用户访问登录页面
                 )
                 .logout(LogoutConfigurer::permitAll) // 允许所有用户退出登录
@@ -52,6 +59,7 @@ public class SecurityConfig {
     }
 
     @Bean
+
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }

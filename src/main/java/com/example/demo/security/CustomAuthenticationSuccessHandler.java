@@ -8,6 +8,8 @@ import org.springframework.security.web.authentication.SimpleUrlAuthenticationSu
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
@@ -15,21 +17,29 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         String targetUrl = determineTargetUrl(authentication);
+        System.out.println("Target URL: " + targetUrl);
         getRedirectStrategy().sendRedirect(request, response, targetUrl);
     }
 
     private String determineTargetUrl(Authentication authentication) {
-        String role = authentication.getAuthorities().stream()
+        List<String> roles = authentication.getAuthorities().stream()
                 .map(grantedAuthority -> grantedAuthority.getAuthority())
-                .findFirst()
-                .orElseThrow(() -> new IllegalStateException("User must have at least one role"));
+                .collect(Collectors.toList());
+        System.out.println("User roles: " + roles);
 
-        if (role.equals("ROLE_ADMIN")) {
-            return "/manage.html";
-        } else if (role.equals("ROLE_USER")) {
+        if (roles.contains("ROLE_INFORC")) {
+            return "/InforC.html";
+        } else if (roles.contains("ROLE_FACC")) {
+            return "/FACC.html";
+        } else if (roles.contains("ROLE_HUMANC")) {
+            return "/HumanC.html";
+        } else if (roles.contains("ROLE_GENERALC")) {
+            return "/GeneralC.html";
+        } else if (roles.contains("ROLE_CONCIERGE")) {
             return "/DA.html";
-        } else {
-            throw new IllegalStateException("Role " + role + " not supported");
+        }
+        else {
+            throw new IllegalStateException("Role not supported");
         }
     }
 }

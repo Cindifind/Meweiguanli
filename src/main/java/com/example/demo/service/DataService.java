@@ -27,4 +27,5 @@ public class DataService {
     public List<DataEntity> findConciergeData() {
         return dataRepository.findByOAAAAndDel(0,0);
     }
+    public List<DataEntity> findUserData() {return dataRepository.findByGAAndOAAAAndDel(0,0,0);}
 }

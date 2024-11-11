@@ -14,7 +14,6 @@ import java.util.List;
 public class DataController {
     @Autowired
     private DataService dataService;
-
     @GetMapping("/InforC") //信息
     public List<DataEntity> getInforCData() {
         return dataService.findInforCData();
@@ -31,10 +30,13 @@ public class DataController {
     public List<DataEntity> getHumanCData() {
         return dataService.findHumanCData();
     }
-
     @GetMapping("/GeneralC")//通识
     public List<DataEntity> getGeneralCData() {
         return dataService.findGeneralCData();
+    }
+    @GetMapping("/User")
+    public List<DataEntity> getUserData() {
+        return dataService.findUserData();
     }
 }
 

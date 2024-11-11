@@ -22,7 +22,7 @@
     </style>
 </head>
 <body>
-<h1>数据展示</h1>
+<h1>通识</h1>
 <table id="data-table">
     <thead>
     <tr>
@@ -43,7 +43,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('/api/data/InforC')
+        fetch('/api/data/GeneralC')
             .then(response => response.json())
             .then(data => {
                 const tableBody = document.querySelector('#data-table tbody');

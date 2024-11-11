@@ -22,12 +22,13 @@
     </style>
 </head>
 <body>
-<h1>数据展示</h1>
+<h1>人文</h1>
 <table id="data-table">
     <thead>
     <tr>
         <th>ID</th>
         <th>GA</th>
+        <th>OAAA</th>
         <th>Created At</th>
         <th>Name</th>
         <th>Reason</th>
@@ -42,7 +43,7 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        fetch('/api/data/Concierge')
+        fetch('/api/data/HumanC')
             .then(response => response.json())
             .then(data => {
                 const tableBody = document.querySelector('#data-table tbody');
@@ -52,6 +53,7 @@
                     row.innerHTML = `
                             <td>${item.id}</td>
                             <td>${item.ga}</td>
+                            <td>${item.oaaa}</td>
                             <td>${item.created_at}</td>
                             <td>${item.name}</td>
                             <td>${item.reason}</td>
@@ -70,7 +72,7 @@
     });
 
     function updateOaaa(id, value) {
-        const url = value ? `/api/gaT/${id}` : `/api/gaF/${id}`;
+        const url = value ? `/api/oaaaT/${id}` : `/api/oaaaF/${id}`;
         fetch(url, {
             method: 'PUT'
         })
@@ -82,7 +84,7 @@
                     alert('更新失败');
                 }
             })
-            .catch(error => console.error('Error updating GA:', error));
+            .catch(error => console.error('Error updating OAAA:', error));
     }
 
     function deleteVisitor(id) {

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+<h1>User List</h1>
+<button onclick="window.location.href='RegDepartment.html'">Register Department</button>
+<button onclick="window.location.href='ManageDepartment.html'">Manage Department</button> <!-- 新增的按钮 -->
+<table id="userTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Department Name</th>
+        <th>User</th>
+        <th>Level</th>
+        <th>Enabled</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 用户数据将在这里动态插入 -->
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/data/FindUser')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(users => {
+                const tableBody = document.querySelector('#userTable tbody');
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+
+                    const idCell = document.createElement('td');
+                    idCell.textContent = user.id;
+                    row.appendChild(idCell);
+
+                    const usernameCell = document.createElement('td');
+                    usernameCell.textContent = user.username;
+                    row.appendChild(usernameCell);
+
+                    const departmentNameCell = document.createElement('td');
+                    departmentNameCell.textContent = user.department_name;
+                    row.appendChild(departmentNameCell);
+
+                    const userCell = document.createElement('td');
+                    userCell.textContent = user.user;
+                    row.appendChild(userCell);
+
+                    const levelCell = document.createElement('td');
+                    levelCell.textContent = user.level;
+                    row.appendChild(levelCell);
+
+                    const enabledCell = document.createElement('td');
+                    enabledCell.textContent = user.enabled === 0 ? 'false' : 'true'; // 修正拼写错误
+                    row.appendChild(enabledCell);
+
+                    const actionsCell = document.createElement('td');
+
+                    const enableButton = document.createElement('button');
+                    enableButton.textContent = 'Enable';
+                    enableButton.onclick = () => enableUser(user.id, user.level);
+                    actionsCell.appendChild(enableButton);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.onclick = () => deleteUser(user.id);
+                    actionsCell.appendChild(deleteButton);
+
+                    row.appendChild(actionsCell);
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    });
+
+    function enableUser(id, level) {
+        fetch(`/api/enabledT/${id}/${level}`, {
+            method: 'PUT'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('User enabled successfully:', data);
+                location.reload(); // 刷新页面以显示更新后的数据
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+
+    function deleteUser(id) {
+        fetch(`/api/delUsers/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('User deleted successfully:', data);
+                location.reload(); // 刷新页面以显示更新后的数据
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+</script>
+</body>
+</html>

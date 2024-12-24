@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Department List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin: 2px;
+        }
+    </style>
+</head>
+<body>
+<h1>Department List</h1>
+<table id="departmentTable">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Department Name</th>
+        <th>Level</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 部门数据将在这里动态插入 -->
+    </tbody>
+</table>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        fetch('/api/departments/listAll')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(departments => {
+                const tableBody = document.querySelector('#departmentTable tbody');
+                departments.forEach(department => {
+                    const row = document.createElement('tr');
+
+                    const idCell = document.createElement('td');
+                    idCell.textContent = department.id;
+                    row.appendChild(idCell);
+
+                    const departmentNameCell = document.createElement('td');
+                    departmentNameCell.textContent = department.department_name;
+                    row.appendChild(departmentNameCell);
+
+                    const levelCell = document.createElement('td');
+                    levelCell.textContent = department.level;
+                    row.appendChild(levelCell);
+
+                    const actionsCell = document.createElement('td');
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.onclick = () => deleteDepartment(department.id);
+                    actionsCell.appendChild(deleteButton);
+
+                    row.appendChild(actionsCell);
+
+                    tableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    });
+
+    function deleteDepartment(id) {
+        fetch(`/api/departments/delete/${id}`, {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Department deleted successfully:', data);
+                location.reload(); // 刷新页面以显示更新后的数据
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+    }
+</script>
+</body>
+</html>

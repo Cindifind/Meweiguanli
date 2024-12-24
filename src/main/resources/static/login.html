@@ -1,111 +1,66 @@
-
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户登录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="layui/css/layui.css" rel="stylesheet" type="text/css">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="css/index_style.css" rel="stylesheet" type="text/css">
+    <link href="css/animate.min.css" rel="stylesheet" type="text/css">
+    <link href="css/lstyles.css" rel="stylesheet" type="text/css">
+    <title>Login Page</title>
 </head>
 <body>
-<div class="container">
-    <div class="login-wrapper">
-        <h1 class="header">用户登录</h1>
-        <form th:action="@{/login}" method="post">
-            <label for="username">用户名:</label>
-            <input type="text" id="username" name="username" class="input-item" required><br><br>
-
-            <label for="password">密码:</label>
-            <input type="password" id="password" name="password" class="input-item" required><br><br>
-
-            <button type="submit" class="btn green larrow">登录</button>
-        </form>
+<section class="section" id="section1">
+    <div class="fp-tablecell">
+        <div class="login-box">
+            <h1>用户登录</h1>
+            <form th:action="@{/login}" method="post">
+                <div class="textbox">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" placeholder="用户名" class="input-item" required>
+                </div>
+                <div class="textbox">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" placeholder="密码" class="input-item" required>
+                </div>
+                <button type="submit" class="btn green larrow">登录</button>
+            </form>
+            <a href="register.html" >注册</a>
+        </div>
     </div>
-
-</div>
-<div id="result"></div>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-    }
-    html {
-        height: 100%;
-    }
-    body {
-        height: 100%;
-    }
-    .container {
-        height: 100%;
-        background-color: white;
-    }
-    .login-wrapper {
-        background-color: rgba(80,80,80,0.3);
-        width: 358px;
-        height: 588px;
-        border-radius: 50px;
-        padding: 0 50px;
-        position: relative;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
-        box-shadow: 0px 5px 5px rgba(80,80,80,0.6)
-    }
-    .header {
-        font-size: 38px;
-        font-weight: bold;
-        text-align: center;
-        line-height: 200px;
-    }
-    .input-item {
-        display: block;
-        width: 100%;
-        margin-bottom: 20px;
-        border: 0;
-        padding: 10px;
-        border-bottom: 1px solid rgb(128,125,125);
-        font-size: 15px;
-        outline: none;
-        background-color: rgba(255,255,255,0.5);
-        /* text-align: center; */
-        border: 2px solid white;
-        border-radius: 5px;
-        /* box-shadow: 3px 3px 2px rgb(249, 255, 85); */
-    }
-    .input-item:focus {
-        color: rgb(0, 255, 255);
-        background-color: rgba(255,255,255,0.8);
-        outline-color: rgb(0, 255, 255);
-        box-shadow: -3px -3px 15px rgb(0, 255, 255);
-        transition: .1s;
-        transition-property: box-shadow;
-    }
-    .input-item::placeholder {
-        text-transform: uppercase;
-    }
-    .btn {
-        width: 100%;
-        line-height: 38px;
-        text-align: center;
-        font-weight: bold;
-        color: #fff;
-        text-shadow: 1px 1px 1px #333;
-        border-radius: 5px;
-        margin: 0 20px 20px 0;
-        position: relative;
-        overflow: hidden;
-    }
-    .btn.green{
-        border:1px solid #64c878;
-        box-shadow: 0 1px 2px #b9ecc4 inset,0 -1px 0 #6c9f76 inset,0 -2px 3px #b9ecc4 inset;
-        background: -webkit-linear-gradient(top,#90dfa2,#84d494);
-        background: -moz-linear-gradient(top,#90dfa2,#84d494);
-        background: linear-gradient(top,#90dfa2,#84d494);
-    }
-    .green:hover{
-        background: -webkit-linear-gradient(top,#aaebb9,#82d392);
-        background: -moz-linear-gradient(top,#aaebb9,#82d392);
-        background: linear-gradient(top,#aaebb9,#82d392);
-    }
-
-</style>
+</section>
+<footer class="footer wow fadeInUp" id="contact">
+    <div class="footer-top">
+        <div class="container">
+            <div class="layui-row">
+                <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
+                    <div class="single-widget about">
+                        <div class="footer-logo">
+                            <h2>GSXY</h2>
+                        </div>
+                        <p>致谢我闲暇时光</p>
+                        <div class="button">
+                            <a href="#" class="btn layui-btn layui-btn-normal">关于我</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4">
+                    <div class="single-widget contact">
+                        <h2>联系我</h2>
+                        <ul class="list">
+                            <li><i class="fa fa-map"></i>地址:-------------------</li>
+                            <li><i class="fa fa-qq"></i>QQ: 834888615 </li>
+                            <li><i class="fa fa-envelope"></i>邮箱: 834888615@qq.com</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<script src="./layui/layui.js"></script>
+<script src="./js/index.js"></script>
+<script src="./js/wow.min.js"></script>
 </body>
 </html>

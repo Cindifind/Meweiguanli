@@ -3,37 +3,40 @@ package com.example.demo.model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="visitors")
+@Table(name = "visitors")
 public class DataEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String name;
-    private Integer del;
-    private String reason;
+    private String departmentName;
     private String created_at;
-    private Integer GA;
-    private Integer OAAA;
-    private String carID;
+    @Column(name = "carid")
+    private String carId;
+    private String nameID;
+    private String name;
     private String phonenum;
-    private String nameId;
+    private String reason;
     private String request_at;
-    private String college;
+    private String openid;
+    private String del;
+    private int approve;
+
     public DataEntity() {
     }
-    public DataEntity(Integer id, String name, Integer del, String reason, String created_at, Integer GA, Integer OAAA, String carID, String phonenum, String nameId, String request_at, String college) {
+
+    public DataEntity(Integer id, String departmentName, String created_at, String carId, String nameID, String name, String phonenum, String reason, String request_at, String openid, String del, int approve) {
         this.id = id;
-        this.name = name;
-        this.del = del;
-        this.reason = reason;
+        this.departmentName = departmentName;
         this.created_at = created_at;
-        this.GA = GA;
-        this.OAAA = OAAA;
-        this.carID = carID;
+        this.carId = carId;
+        this.nameID = nameID;
+        this.name = name;
         this.phonenum = phonenum;
-        this.nameId = nameId;
+        this.reason = reason;
         this.request_at = request_at;
-        this.college = college;
+        this.openid = openid;
+        this.del = del;
+        this.approve = approve;
     }
 
     /**
@@ -54,50 +57,18 @@ public class DataEntity {
 
     /**
      * 获取
-     * @return name
+     * @return departmentName
      */
-    public String getName() {
-        return name;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
     /**
      * 设置
-     * @param name
+     * @param departmentName
      */
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    /**
-     * 获取
-     * @return del
-     */
-    public Integer getDel() {
-        return del;
-    }
-
-    /**
-     * 设置
-     * @param del
-     */
-    public void setDel(Integer del) {
-        this.del = del;
-    }
-
-    /**
-     * 获取
-     * @return reason
-     */
-    public String getReason() {
-        return reason;
-    }
-
-    /**
-     * 设置
-     * @param reason
-     */
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     /**
@@ -118,50 +89,50 @@ public class DataEntity {
 
     /**
      * 获取
-     * @return GA
+     * @return carId
      */
-    public Integer getGA() {
-        return GA;
+    public String getCarId() {
+        return carId;
     }
 
     /**
      * 设置
-     * @param GA
+     * @param carId
      */
-    public void setGA(Integer GA) {
-        this.GA = GA;
+    public void setCarId(String carId) {
+        this.carId = carId;
     }
 
     /**
      * 获取
-     * @return OAAA
+     * @return nameID
      */
-    public Integer getOAAA() {
-        return OAAA;
+    public String getNameID() {
+        return nameID;
     }
 
     /**
      * 设置
-     * @param OAAA
+     * @param nameID
      */
-    public void setOAAA(Integer OAAA) {
-        this.OAAA = OAAA;
+    public void setNameID(String nameID) {
+        this.nameID = nameID;
     }
 
     /**
      * 获取
-     * @return carID
+     * @return name
      */
-    public String getCarID() {
-        return carID;
+    public String getName() {
+        return name;
     }
 
     /**
      * 设置
-     * @param carID
+     * @param name
      */
-    public void setCarID(String carID) {
-        this.carID = carID;
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
@@ -182,18 +153,18 @@ public class DataEntity {
 
     /**
      * 获取
-     * @return nameId
+     * @return reason
      */
-    public String getNameId() {
-        return nameId;
+    public String getReason() {
+        return reason;
     }
 
     /**
      * 设置
-     * @param nameId
+     * @param reason
      */
-    public void setNameId(String nameId) {
-        this.nameId = nameId;
+    public void setReason(String reason) {
+        this.reason = reason;
     }
 
     /**
@@ -214,21 +185,53 @@ public class DataEntity {
 
     /**
      * 获取
-     * @return college
+     * @return openid
      */
-    public String getCollege() {
-        return college;
+    public String getOpenid() {
+        return openid;
     }
 
     /**
      * 设置
-     * @param college
+     * @param openid
      */
-    public void setCollege(String college) {
-        this.college = college;
+    public void setOpenid(String openid) {
+        this.openid = openid;
+    }
+
+    /**
+     * 获取
+     * @return del
+     */
+    public String getDel() {
+        return del;
+    }
+
+    /**
+     * 设置
+     * @param del
+     */
+    public void setDel(String del) {
+        this.del = del;
+    }
+
+    /**
+     * 获取
+     * @return approve
+     */
+    public int getApprove() {
+        return approve;
+    }
+
+    /**
+     * 设置
+     * @param approve
+     */
+    public void setApprove(int approve) {
+        this.approve = approve;
     }
 
     public String toString() {
-        return "DataEntity{id = " + id + ", name = " + name + ", del = " + del + ", reason = " + reason + ", created_at = " + created_at + ", GA = " + GA + ", OAAA = " + OAAA + ", carID = " + carID + ", phonenum = " + phonenum + ", nameId = " + nameId + ", request_at = " + request_at + ", college = " + college + "}";
+        return "DataEntity{id = " + id + ", departmentName = " + departmentName + ", level = " + ", created_at = " + created_at + ", carId = " + carId + ", nameID = " + nameID + ", name = " + name + ", phonenum = " + phonenum + ", reason = " + reason + ", request_at = " + request_at + ", openid = " + openid + ", del = " + del + ", approve = " + approve + "}";
     }
 }

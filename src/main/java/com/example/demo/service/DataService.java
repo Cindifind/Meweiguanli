@@ -1,9 +1,10 @@
 package com.example.demo.service;
 
-import com.example.demo.dao.DataRepository;
-import com.example.demo.model.DataEntity;
+import com.example.demo.model.User;
+import com.example.demo.repository.DataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -12,20 +13,11 @@ public class DataService {
     @Autowired
     private DataRepository dataRepository;
 
-    public List<DataEntity> findInforCData() {
-        return dataRepository.findByDelAndCollege(0,"0");
+    @Transactional(readOnly = true)
+    public List<User> findUsers() {
+        return dataRepository.findByIdNot(1);
     }
-    public List<DataEntity> findHumanCData() {
-        return dataRepository.findByDelAndCollege(0,"1");
-    }
-    public List<DataEntity> findGeneralCData() {
-        return dataRepository.findByDelAndCollege(0,"2");
-    }
-    public List<DataEntity> findFACCData() {
-        return dataRepository.findByDelAndCollege(0,"3");
-    }
-    public List<DataEntity> findConciergeData() {
-        return dataRepository.findByOAAAAndDel(0,0);
-    }
-    public List<DataEntity> findUserData() {return dataRepository.findByGAAndOAAAAndDel(0,0,0);}
 }
+
+
+

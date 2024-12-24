@@ -10,7 +10,7 @@ public class ExampleEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Integer del;
-    private Integer ga;
-    private Integer oaaa;
+    private Integer level;
+    private Integer level2;
     // Getters and Setters
 }

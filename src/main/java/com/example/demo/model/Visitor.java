@@ -4,16 +4,18 @@ import java.util.Date;
 
 public class Visitor {
     private String name;
-    private String reason;
-    private String del;
-    private String carID;
-    private Date created_at;
-    private String phonenum;
-    private String nameId;
-    private String request_at;
-    private String college;
+    private final String reason;
+    private final String del;
+    private final String carID;
+    private final Date created_at;
+    private final String phonenum;
+    private final String nameId;
+    private final String request_at;
+    private final String department_name;
+    private final String openid;
+    private final int approve;
 
-    public Visitor(String name, String reason ,String carID,String phonenum,String nameId,String request_at,String college) {
+    public Visitor(String name, String reason , String carID, String phonenum, String nameId, String request_at, String department_name, String openid) {
         this.name = name;
         this.reason = reason;
         this.carID = carID;
@@ -22,13 +24,18 @@ public class Visitor {
         this.phonenum = phonenum;
         this.nameId = nameId;
         this.request_at = request_at;
-        this.college = college;
+        this.department_name = department_name;
+        this.openid = openid;
+        this.approve = 0;
+    }
+    public int getApprove() {
+        return approve;
     }
     public String getRequest_at() {
         return request_at;
     }
-    public String getCollege() {
-        return college;
+    public String getDepartment_name() {
+        return department_name;
     }
     public String getNameId() {
         return nameId;
@@ -53,5 +60,8 @@ public class Visitor {
     }
     public String getPhonenum() {
         return phonenum;
+    }
+    public String getOpenid() {
+        return openid;
     }
 }

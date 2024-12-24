@@ -10,15 +10,13 @@ public class ExampleService {
     @Autowired
     private ExampleRepository exampleRepository;
 
-    public void updateDelValue(Integer id) {
-        exampleRepository.updateDelValueById(id);
+
+    public void updateEnabledValue(Integer id, Integer value) {
+        exampleRepository.updateEnabledValueById(id, value);
     }
 
-    public void updateGaValue(Integer id, Integer value) {
-        exampleRepository.updateGaValueById(id, value);
+    public void deleteUserById(Integer id) {
+        exampleRepository.deleteUserById(id);
     }
 
-    public void updateOaaaValue(Integer id, Integer value) {
-        exampleRepository.updateOaaaValueById(id, value);
-    }
 }

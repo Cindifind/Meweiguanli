@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>访客数据</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/data/FindVisitor')
+                .then(response => response.json())
+                .then(data => {
+                    const visitorTable = document.getElementById('visitor-table').getElementsByTagName('tbody')[0];
+                    data.forEach(visitor => {
+                        const row = visitorTable.insertRow();
+                        const idCell = row.insertCell(0);
+                        const departmentNameCell = row.insertCell(1);
+                        const createdAtCell = row.insertCell(2);
+                        const carIdCell = row.insertCell(3);
+                        const nameIDCell = row.insertCell(4);
+                        const nameCell = row.insertCell(5);
+                        const phonenumCell = row.insertCell(6);
+                        const reasonCell = row.insertCell(7);
+                        const requestAtCell = row.insertCell(8);
+
+                        idCell.textContent = visitor.id;
+                        departmentNameCell.textContent = visitor.departmentName;
+                        createdAtCell.textContent = visitor.created_at;
+                        carIdCell.textContent = visitor.carId || 'N/A';
+                        nameIDCell.textContent = visitor.nameID;
+                        nameCell.textContent = visitor.name;
+                        phonenumCell.textContent = visitor.phonenum;
+                        reasonCell.textContent = visitor.reason;
+                        requestAtCell.textContent = visitor.request_at || 'N/A';
+
+                    });
+                })
+                .catch(error => console.error('Error fetching visitor data:', error));
+        });
+
+
+        function logout() {
+            fetch('/logout', { method: 'POST' })
+                .then(response => {
+                    if (response.ok) {
+                        window.location.href = '/login.html'; // 登出成功后重定向到登录页面
+                    } else {
+                        console.error('Logout failed');
+                    }
+                })
+                .catch(error => console.error('Error during logout:', error));
+        }
+    </script>
+</head>
+<body>
+<h1>访客数据</h1>
+<button onclick="logout()">登出</button>
+<table id="visitor-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>部门名称</th>
+        <th>创建时间</th>
+        <th>车牌号</th>
+        <th>姓名ID</th>
+        <th>姓名</th>
+        <th>电话号码</th>
+        <th>原因</th>
+        <th>请求时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 数据将插入到这里 -->
+    </tbody>
+</table>
+</body>
+</html>

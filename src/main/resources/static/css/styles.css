@@ -1,0 +1,214 @@
+/* 示例 CSS - styles.css */
+
+/* Reset styles */
+* {
+    padding: 0;
+    margin: 0;
+}
+ul li {
+    list-style: none;
+}
+a, img {
+    text-decoration: none;
+    border: none;
+}
+
+/* Navigation */
+.menu_close, .menu_open {
+    position: fixed;
+    z-index: 1;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    right: 55px;
+    top: 40px;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.1);
+    overflow: hidden;
+    z-index: 102;
+}
+.menu_close:hover, .menu_open:hover {
+    background: #6bc30d;
+}
+.menu_close span, .menu_open span {
+    display: block;
+    background: #FFF;
+    width: 26px;
+    height: 2px;
+    line-height: 10px;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+.menu_open span:first-child, .menu_open span:last-child, .menu_open span:nth-last-of-type(2) {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+.menu_close span:first-child {
+    margin-top: 18px;
+}
+.menu_close span {
+    margin-top: 0;
+}
+.menu_open span:first-child {
+    margin-top: 12px;
+}
+.menu_close span:last-child {
+    display: none;
+}
+.menu_close span:first-child {
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+.menu_close span:nth-of-type(2) {
+    -webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    margin-top: -2px;
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+.hover_animation {
+    -webkit-transition: all .5s;
+    -moz-transition: all .5s;
+    -ms-transition: all .5s;
+    -o-transition: all .5s;
+    transition: all .5s;
+}
+.navgation, .navgation_close, .navgation_open {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    z-index: 101;
+}
+.navgation_close {
+    height: 0;
+}
+.navgation_open {
+    background: rgba(0,0,0,.6);
+}
+.navgation:before, .navgation_close:before, .navgation_open:before {
+    content: '';
+    width: 60%;
+    height: 100%;
+    background: #fff;
+    position: fixed;
+    -webkit-transition: all .5s cubic-bezier(.19, 1, .22, 1);
+    -moz-transition: all .5s cubic-bezier(.19, 1, .22, 1);
+    -o-transition: all .5s cubic-bezier(.19, 1, .22, 1);
+    transition: all .5s cubic-bezier(.19, 1, .22, 1);
+    -webkit-transform: translateZ(0) translateX(45%) skew(-12deg);
+    -moz-transform: translateZ(0) translateX(45%) skew(-12deg);
+    -ms-transform: translateZ(0) translateX(45%) skew(-12deg);
+    -o-transform: translateZ(0) translateX(45%) skew(-12deg);
+    transform: translateZ(0) translateX(45%) skew(-12deg);
+    -webkit-backface-visibility: hidden;
+    -moz-backface-visibility: hidden;
+    -ms-backface-visibility: hidden;
+    -o-backface-visibility: hidden;
+    backface-visibility: hidden;
+    content: '';
+    top: 0;
+    z-index: 11;
+    background-color: #fff;
+    *{padding:0;margin:0;box-sizing:border-box;}
+    body, html {height: 100%;font-family: 'Microsoft YaHei', sans-serif;}
+    .menu_open, .menu_close {
+        position: fixed;
+        z-index: 1;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        right: 55px;
+        top: 40px;
+        cursor: pointer;
+        background-color: rgba(0,0,0,.1);
+        overflow: hidden;
+        z-index: 102;
+    }
+    .menu_open:hover, .menu_close:hover {background: #6bc30d;}
+    .menu_open span, .menu_close span {
+        display: block;
+        background: #FFF;
+        width: 26px;
+        height: 2px;
+        line-height: 10px;
+        margin: 0 auto;
+        margin-top: 5px;
+    }
+    .menu_close span:first-child {margin-top: 18px;}
+    .menu_close span {margin-top: 0;}
+    .menu_open span:first-child {margin-top: 12px;}
+    .menu_close span:last-child {display: none;}
+    .menu_close span:first-child {transform: rotate(45deg); transition: all .5s;}
+    .menu_close span:nth-of-type(2) {transform: rotate(-45deg); margin-top: -2px; transition: all .5s;}
+
+    .navgation, .navgation_close, .navgation_open {width: 100%; height: 100%; position: fixed; z-index: 101;}
+    .navgation_close {height: 0;}
+    .navgation_open {background: rgba(0,0,0,.6);}
+    .navgation:before, .navgation_close:before, .navgation_open:before {
+        content: ''; width: 60%; height: 100%; background: #fff;
+        position: fixed; transition: all .5s cubic-bezier(.19,1,.22,1);
+        transform: translateX(45%) skew(-12deg); backface-visibility: hidden; top: 0; z-index: 11;
+        background-color: #fff; background-image: linear-gradient(46deg, #fff, #f1f2f0);
+    }
+    .navgation_open:before {right: 0;}
+    .navgation_close:before {right: -60%;}
+
+    .point {position: absolute; right: 0; top: 200px; z-index: 101; font-size: 20px;}
+    .point li {display: block; text-align: right; line-height: 80px;}
+    .point li a {
+        font-family: "Microsoft YaHei"; color: #686967; display: inline-block;
+        line-height: 46px; padding: 10px 50px; font-size: 20px;
+        text-decoration: none; transition: color .6s linear; position: relative;
+    }
+    .point li a:before {
+        transition: all .3s linear; content: ''; height: 1px; background-color: transparent;
+        position: absolute; top: 50%; left: 15px; right: 105px;
+    }
+    .point li a:hover {color: #6bc30d;}
+    .point li a:hover:before {background-color: #6bc30d; right: 15px;}
+    .navgation_open .point {display: block;}
+    .navgation_close .point {display: none;}
+
+    .logo {font-size: 50px; position: absolute; right: 0; bottom: 0; z-index: 101; padding: 10px 50px;}
+    .logo a {font-family: BarbaraHand; color: #686967; text-decoration: none;}
+    .navgation_open .logo {display: block;}
+    .navgation_close .logo {display: none;}
+
+    /* Login Section */
+    .section {
+        display: table; table-layout: fixed; width: 100%; position: relative; padding: 100px 0; overflow: hidden;
+        background-color: transparent; background-image: url('https://via.placeholder.com/1920x1080');
+        background-position: center; background-attachment: fixed; background-repeat: no-repeat; background-size: cover;
+    }
+    .section:after {
+        content: ""; position: absolute; top: 0; left: 0; z-index: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, .5);
+    }
+    .fp-tablecell {display: table-cell; vertical-align: middle; width: 100%; height: 100%; position: relative; z-index: 1;}
+    .login-box {max-width: 400px; margin: 0 auto; background: rgba(255, 255, 255, 0.9); padding: 40px; border-radius: 10px; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);}
+    .login-box h1 {text-align: center; margin-bottom: 20px; color: #333;}
+    .login-box .textbox {position: relative; margin-bottom: 30px;}
+    .login-box .textbox input {
+        width: 100%; padding: 10px; background: none; border: none; border-bottom: 2px solid #333; outline: none; color: #333; font-size: 18px;
+    }
+    .login-box .textbox i {position: absolute; left: 10px; top: 10px; color: #333; font-size: 18px;}
+    .login-box .btn {width: 100%; background: #333; border: none; padding: 10px; cursor: pointer; font-size: 18px; color: #fff; border-radius: 5px;}
+    .login-box .btn:hover {background: #6bc30d; transition: 0.5s;}
+
+    @media screen and (max-width: 768px) {
+        .navgation:before, .navgation_open:before, .navgation_close:before {width: 50%; transform: none;}
+        .logo {width: 50%; padding: 0; text-align: center;}
+    }
+}

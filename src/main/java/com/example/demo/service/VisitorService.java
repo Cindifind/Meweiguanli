@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class VisitorService {
-    final
-    VisitorDAOImpl visitorDAO;
+    final VisitorDAOImpl visitorDAO;
 
     public VisitorService(VisitorDAOImpl visitorDAO) {
         this.visitorDAO = visitorDAO;

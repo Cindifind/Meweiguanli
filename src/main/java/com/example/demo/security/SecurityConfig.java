@@ -34,22 +34,17 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("User.html", "/login.html","index.html").permitAll()
-                        .requestMatchers("/login", "/api/login", "/api/GetAd", "/api/visitor","/api/data/User").permitAll()
-                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/InforC").hasRole("INFORC")
-                        .requestMatchers("/api/gaT/**", "/api/gaF/**", "/api/data/Concierge").hasRole("CONCIERGE")
-                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/HumanC").hasRole("HUMANC")
-                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/FACC").hasRole("FACC")
-                        .requestMatchers("/api/oaaaT/**", "/api/oaaaF/**", "/api/data/GeneralC").hasRole("GENERALC")
-
+                        .requestMatchers( "/login.html","index.html","ad.html","register.html").permitAll()
+                        .requestMatchers("/login","/api/GetAd", "/api/visitor","api/example","api/AddUsers","api/departments/list","api/departments/listAll","/api/data/FindVisitorByOpenId").permitAll()
+                        .requestMatchers("/js/**","/font/**","/css/**","/font-awesome/**","/layui/**").permitAll()
+                        .requestMatchers( "api/data/FindUser","api/delUsers/**","api/enabledT/*/*").hasRole("ADMIN")
+                        .requestMatchers("/api/approve1T","/api/approve1F").hasRole("LEVEL")
+                        .requestMatchers("/api/approve2T","/api/approve2F").hasAnyRole( "LEVEL2")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login.html") // 指定登录页面的URL
                         .successHandler(customAuthenticationSuccessHandler)
-                        //登录成功跳转DA.html
-//                        .defaultSuccessUrl("/User.html", true)
-
                         .permitAll() // 允许所有用户访问登录页面
                 )
                 .logout(LogoutConfigurer::permitAll) // 允许所有用户退出登录

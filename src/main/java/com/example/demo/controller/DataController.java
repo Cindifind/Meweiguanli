@@ -1,8 +1,12 @@
 package com.example.demo.controller;
 
+
 import com.example.demo.model.DataEntity;
+import com.example.demo.model.User;
+import com.example.demo.security.CustomUserDetails;
 import com.example.demo.service.DataService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.service.VisitorDataService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,31 +16,28 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/data")
 public class DataController {
-    @Autowired
-    private DataService dataService;
-    @GetMapping("/InforC") //信息
-    public List<DataEntity> getInforCData() {
-        return dataService.findInforCData();
+    private final DataService dataService;
+    private final VisitorDataService visitorDataService;
+
+    public DataController(DataService dataService, VisitorDataService visitorDataService) {
+        this.dataService = dataService;
+        this.visitorDataService = visitorDataService;
     }
-    @GetMapping("/Concierge")//二级
-    public List<DataEntity> getConciergeData() {
-        return dataService.findConciergeData();
+
+    // 查询所有用户
+    @GetMapping("/FindUser")
+    public List<User> getUsers() {
+        return dataService.findUsers();
     }
-    @GetMapping("/FACC")//财经
-    public List<DataEntity> getActiveData() {
-        return dataService.findFACCData();
+    // 查询所有访客
+    @GetMapping("/FindVisitor")
+    public List<DataEntity> getVisitors(@AuthenticationPrincipal CustomUserDetails userDetails) {
+        return visitorDataService.findVisitorData(userDetails.getUser().getDepartment_name(), userDetails.getUser().getLevel());
     }
-    @GetMapping("/HumanC")//人文
-    public List<DataEntity> getHumanCData() {
-        return dataService.findHumanCData();
-    }
-    @GetMapping("/GeneralC")//通识
-    public List<DataEntity> getGeneralCData() {
-        return dataService.findGeneralCData();
-    }
-    @GetMapping("/User")
-    public List<DataEntity> getUserData() {
-        return dataService.findUserData();
+    //查找固定访客
+    @GetMapping("/FindVisitorByOpenId")
+    public List<DataEntity> getVisitorsByOpenId(String openid) {
+        return visitorDataService.findByOpenidAndDel(openid);
     }
 }
 

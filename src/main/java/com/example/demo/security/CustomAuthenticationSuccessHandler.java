@@ -27,16 +27,14 @@ public class CustomAuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .collect(Collectors.toList());
         System.out.println("User roles: " + roles);
 
-        if (roles.contains("ROLE_INFORC")) {
-            return "/InforC.html";
-        } else if (roles.contains("ROLE_FACC")) {
-            return "/FACC.html";
-        } else if (roles.contains("ROLE_HUMANC")) {
-            return "/HumanC.html";
-        } else if (roles.contains("ROLE_GENERALC")) {
-            return "/GeneralC.html";
-        } else if (roles.contains("ROLE_CONCIERGE")) {
-            return "/DA.html";
+        if (roles.contains("ROLE_ADMIN")) {
+            return "/admin.html";
+        } else if (roles.contains("ROLE_LEAVE")) {
+            return "/level.html";
+        } else if (roles.contains("ROLE_LEAVE2")) {
+            return "/level2.html";
+        } else if (roles.contains("ROLE_LEAVE3")) {
+            return "/level3.html";
         }
         else {
             throw new IllegalStateException("Role not supported");

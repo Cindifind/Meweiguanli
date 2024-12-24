@@ -1,42 +1,46 @@
 package com.example.demo.dao;
 
 import com.example.demo.model.Visitor;
-import com.example.demo.util.ManageConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 
 @Repository
 public class VisitorDAOImpl implements VisitorDAO {
+
+    private static final Logger logger = LoggerFactory.getLogger(VisitorDAOImpl.class);
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     @Override
     public void insertVisitor(Visitor visitor) {
-        String sql = "INSERT INTO visitors (name, reason, del, created_at, carid,phonenum,nameid,college,request_at) VALUES (?, ?, ?, ?, ? ,?,?,?,?)";
+        String sql = "INSERT INTO visitors (name, reason, del, created_at, carid, phonenum, nameid, department_name, request_at, openid, approve) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
         try {
-            Connection connection = ManageConnection.getConnection();
-            if (connection == null) {
-                System.err.println("无法获取数据库连接");
-                return;
-            }
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, visitor.getName());
-            preparedStatement.setString(2, visitor.getReason());
-            preparedStatement.setString(3, visitor.getDel());
-            preparedStatement.setString(4, visitor.getCreated_at());
-            preparedStatement.setString(5, visitor.getCarID());
-            preparedStatement.setString(6, visitor.getPhonenum());
-            preparedStatement.setString(7, visitor.getNameId());
-            preparedStatement.setString(8, visitor.getCollege());
-            preparedStatement.setString(9, visitor.getRequest_at());
-            int rowsAffected = preparedStatement.executeUpdate();
+            int rowsAffected = jdbcTemplate.update(sql,
+                    visitor.getName(),
+                    visitor.getReason(),
+                    visitor.getDel(),
+                    visitor.getCreated_at(),
+                    visitor.getCarID(),
+                    visitor.getPhonenum(),
+                    visitor.getNameId(),
+                    visitor.getDepartment_name(),
+                    visitor.getRequest_at(),
+                    visitor.getOpenid(),
+                    0 // approve 默认值为 0
+            );
+
             if (rowsAffected > 0) {
-                System.out.println("数据插入成功");
+                logger.info("数据插入成功，访客姓名: {}", visitor.getName());
             } else {
-                System.out.println("数据插入失败");
+                logger.warn("数据插入失败，访客姓名: {}", visitor.getName());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            logger.error("插入访客数据时发生异常，访客姓名: {}", visitor.getName(), e);
         }
     }
 }

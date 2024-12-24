@@ -20,7 +20,7 @@
             display: block;
             margin-bottom: 5px;
         }
-        input[type="text"] {
+        input[type="text"], select {
             width: 100%;
             padding: 8px;
             box-sizing: border-box;
@@ -64,11 +64,13 @@
         <label for="nameId">身份证号:</label>
         <input type="text" id="nameId" name="nameId"><br><br>
 
-        <label for="request_at">访问时间:</label>
-        <input type="text" id="request_at" name="request_at"><br><br>
+        <label for="requestAt">访问时间:</label>
+        <input type="text" id="requestAt" name="requestAt"><br><br>
 
-        <label for="college">所属学院:</label>
-        <input type="text" id="college" name="college"><br><br>
+        <label for="departmentName">所属学院:</label>
+        <select id="departmentName" name="departmentName" required>
+            <!-- 选项将通过JavaScript动态添加 -->d
+        </select><br><br>
 
         <button type="submit">提交</button>
     </form>
@@ -87,8 +89,8 @@
         const carID = document.getElementById('carID').value;
         const phonenum = document.getElementById('phonenum').value;
         const nameId = document.getElementById('nameId').value;
-        const request_at = document.getElementById('request_at').value;
-        const college = document.getElementById('college').value;
+        const requestAt = document.getElementById('requestAt').value;
+        const departmentName = document.getElementById('departmentName').value;
 
         const visitorRequest = {
             name: name,
@@ -96,8 +98,8 @@
             reason: reason,
             phonenum: phonenum,
             nameId: nameId,
-            request_at: request_at,
-            college: college
+            request_at: requestAt,
+            department_name: departmentName
         };
 
         fetch('/api/visitor', {
@@ -128,8 +130,29 @@
             });
     }
 
-    // 页面加载时自动调用 getAd 函数
-    window.onload = getAd;
+    // 获取学院列表并填充到下拉菜单
+    function populateDepartments() {
+        fetch('/api/departments/list')
+            .then(response => response.json())
+            .then(data => {
+                const selectElement = document.getElementById('departmentName');
+                data.forEach(department => {
+                    const option = document.createElement('option');
+                    option.value = department.department_name;
+                    option.text = department.department_name;// 假设返回的每个部门对象都有一个'name'属性
+                    selectElement.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('获取学院列表失败:', error);
+            });
+    }
+
+    // 页面加载时自动调用 getAd 和 populateDepartments 函数
+    window.onload = () => {
+        getAd();
+        populateDepartments();
+    };
 </script>
 </body>
 </html>

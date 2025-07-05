@@ -19,8 +19,7 @@ public class VisitorController {
 
     // 添加访客
     @PostMapping("/api/visitor")
-    public Result addVisitor(@RequestBody Visitor request) {
-        Visitor visitor = new Visitor(request.getName(), request.getReason(),request.getCarID(),request.getPhonenum(),request.getNameId(),request.getRequest_at(),request.getDepartment_name(),request.getOpenid());
+    public Result addVisitor(@RequestBody Visitor visitor) {
         visitorService.addVisitor(visitor);
         return Result.SUCCESS;
     }

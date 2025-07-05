@@ -24,8 +24,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager) throws Exception {
-        http
-                .cors(cors -> cors.configurationSource(request -> {
+        http.cors(cors -> cors.configurationSource(request -> {
                     org.springframework.web.cors.CorsConfiguration config = new org.springframework.web.cors.CorsConfiguration();
                     config.setAllowCredentials(true);
                     config.addAllowedOriginPattern("*"); // 允许所有域
@@ -34,9 +33,10 @@ public class SecurityConfig {
                     return config;
                 }))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers( "/login.html","index.html","ad.html","register.html").permitAll()
+                        .requestMatchers( "/login.html","index.html","ad.html","register.html","ds.zip").permitAll()
                         .requestMatchers("/login","/api/GetAd", "/api/visitor","api/example","api/AddUsers","api/departments/list","api/departments/listAll","/api/data/FindVisitorByOpenId").permitAll()
                         .requestMatchers("/js/**","/font/**","/css/**","/font-awesome/**","/layui/**").permitAll()
+                        .requestMatchers("/api/departments/add","/api/departments/delete/**").hasRole("ADMIN")
                         .requestMatchers( "api/data/FindUser","api/delUsers/**","api/enabledT/*/*").hasRole("ADMIN")
                         .requestMatchers("/api/approve1T","/api/approve1F").hasRole("LEVEL")
                         .requestMatchers("/api/approve2T","/api/approve2F").hasAnyRole( "LEVEL2")

@@ -1,88 +1,295 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>访客数据</title>
+
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
+        /* 动态背景动画 */
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            animation: fadeInOutBackground 15s infinite;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            position: relative;
+            color: #fff;
+        }
+
+        @keyframes fadeInOutBackground {
+            0%, 33% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            33%, 66% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            66%, 99% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991036275448.jpg');
+            }
+            99%, 100% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(30, 30, 30, 0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+            position: relative;
+            z-index: 1;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        .logout-btn {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #2c3e50;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: #1a252f;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #fff;
         }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+
+        thead th {
+            background-color: #3498db;
+            color: #fff;
+            padding: 12px;
+            font-weight: bold;
+            border-bottom: 2px solid #ddd;
         }
-        th {
-            background-color: #f2f2f2;
+
+        tbody td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+            color: #333;
+        }
+
+        tbody tr:hover {
+            background-color: #f0f8ff;
+        }
+
+        /* 响应式样式 */
+        @media (max-width: 768px) {
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead {
+                display: none;
+            }
+
+            tbody tr {
+                margin-bottom: 15px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                padding: 10px;
+            }
+
+            tbody td {
+                text-align: left;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            tbody td::before {
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: bold;
+                color: #555;
+            }
+
+            tbody td:nth-of-type(1)::before { content: "车牌号"; }
+            tbody td:nth-of-type(2)::before { content: "姓名ID"; }
+            tbody td:nth-of-type(3)::before { content: "姓名"; }
+            tbody td:nth-of-type(4)::before { content: "请求时间"; }
+        }
+        .form-control {
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            height: auto;
+            padding: 6px 12px;
         }
     </style>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
+            const tableBody = document.getElementById('visitor-table').getElementsByTagName('tbody')[0];
+            let allData = []; // 存储原始数据用于过滤
+
             fetch('/api/data/FindVisitor')
                 .then(response => response.json())
                 .then(data => {
-                    const visitorTable = document.getElementById('visitor-table').getElementsByTagName('tbody')[0];
-                    data.forEach(visitor => {
-                        const row = visitorTable.insertRow();
-                        const idCell = row.insertCell(0);
-                        const departmentNameCell = row.insertCell(1);
-                        const createdAtCell = row.insertCell(2);
-                        const carIdCell = row.insertCell(3);
-                        const nameIDCell = row.insertCell(4);
-                        const nameCell = row.insertCell(5);
-                        const phonenumCell = row.insertCell(6);
-                        const reasonCell = row.insertCell(7);
-                        const requestAtCell = row.insertCell(8);
+                    allData = data;
 
-                        idCell.textContent = visitor.id;
-                        departmentNameCell.textContent = visitor.departmentName;
-                        createdAtCell.textContent = visitor.created_at;
-                        carIdCell.textContent = visitor.carId || 'N/A';
-                        nameIDCell.textContent = visitor.nameID;
-                        nameCell.textContent = visitor.name;
-                        phonenumCell.textContent = visitor.phonenum;
-                        reasonCell.textContent = visitor.reason;
-                        requestAtCell.textContent = visitor.request_at || 'N/A';
-
+                    // 提取并填充下拉选项
+                    const dateSet = new Set();
+                    allData.forEach(visitor => {
+                        if (visitor.request_at) {
+                            const dateStr = visitor.request_at.split(' ').slice(0, 3).join(' '); // "Thu Jun 05 2025"
+                            dateSet.add(dateStr);
+                        }
                     });
+
+                    const dateFilter = document.getElementById('dateFilter');
+                    [...dateSet].sort().forEach(date => {
+                        const option = document.createElement('option');
+                        option.value = option.textContent = date;
+                        dateFilter.appendChild(option);
+                    });
+
+                    // 默认加载所有数据
+                    renderTable(allData);
                 })
                 .catch(error => console.error('Error fetching visitor data:', error));
+
+            // 下拉框变化时触发筛选
+            document.getElementById('dateFilter').addEventListener('change', function () {
+                const selectedDate = this.value.trim();
+                if (!selectedDate) {
+                    renderTable(allData); // 显示全部
+                } else {
+                    const filtered = allData.filter(visitor => {
+                        return visitor.request_at && visitor.request_at.startsWith(selectedDate);
+                    });
+                    renderTable(filtered);
+                }
+            });
+
+            // 渲染表格函数
+            function renderTable(data) {
+                tableBody.innerHTML = '';
+                data.forEach(visitor => {
+                    const row = tableBody.insertRow();
+
+                    row.insertCell(0).textContent = visitor.carId || 'N/A';
+                    row.insertCell(1).textContent = visitor.nameID;
+                    row.insertCell(2).textContent = visitor.name;
+                    row.insertCell(3).textContent = visitor.request_at || 'N/A';
+                });
+            }
         });
-
-
         function logout() {
             fetch('/logout', { method: 'POST' })
                 .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/login.html'; // 登出成功后重定向到登录页面
-                    } else {
-                        console.error('Logout failed');
-                    }
+                    if (response.ok) window.location.href = '/login.html';
+                    else console.error('Logout failed');
                 })
                 .catch(error => console.error('Error during logout:', error));
         }
     </script>
 </head>
 <body>
-<h1>访客数据</h1>
-<button onclick="logout()">登出</button>
-<table id="visitor-table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>部门名称</th>
-        <th>创建时间</th>
-        <th>车牌号</th>
-        <th>姓名ID</th>
-        <th>姓名</th>
-        <th>电话号码</th>
-        <th>原因</th>
-        <th>请求时间</th>
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 数据将插入到这里 -->
-    </tbody>
-</table>
+<div class="background-overlay"></div>
+
+<div class="container">
+    <h1>访客数据</h1>
+    <button class="logout-btn" onclick="logout()">登出</button>
+    <div style="margin-bottom: 20px; text-align: center;">
+        <label for="dateFilter" style="font-weight: bold; margin-right: 10px;">选择日期：</label>
+        <select id="dateFilter" class="form-control" style="display: inline-block; width: auto; padding: 6px 12px;">
+            <option value="">全部</option>
+        </select>
+    </div>
+    <table id="visitor-table">
+        <thead>
+        <tr>
+            <th>车牌号</th>
+            <th>姓名ID</th>
+            <th>姓名</th>
+            <th>访问时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 数据将插入到这里 -->
+        </tbody>
+    </table>
+</div>
+<footer class="footer wow fadeInUp" id="contact" style="background-color: #f8f8f8; padding: 50px 0; border-top: 1px solid #ddd;">
+    <div class="container">
+        <div class="layui-row layui-col-space40">
+            <!-- 关于我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">关于我们</h3>
+                    <p style="font-size: 14px; color: #666;">本系统为哈尔滨广厦学院外来人员管理系统，旨在提升校园安全与访客信息管理效率。</p>
+                </div>
+            </div>
+
+            <!-- 联系我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">联系我们</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px; color: #666;">
+                        <li><i class="fa fa-map" style="margin-right: 6px; color: #1E9FFF;"></i>哈尔滨市呼兰区学院路1号</li>
+                        <li><i class="fa fa-qq" style="margin-right: 6px; color: #e00;"></i>QQ：834888615</li>
+                        <li><i class="fa fa-envelope" style="margin-right: 6px; color: #FF5722;"></i>邮箱：83488615@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 友情链接 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">友情链接</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px;">
+                        <li><a href="https://www.gsxy.cn/" target="_blank" style="color: #666;">广厦学院官网</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权栏 -->
+        <div style="text-align: center; margin-top: 40px; font-size: 13px; color: #999;">
+            &copy; 2025 哈尔滨广厦学院 | 外来人员管理系统 版权所有 黑ICP备2025040065号
+        </div>
+    </div>
+</footer>
 </body>
+
 </html>

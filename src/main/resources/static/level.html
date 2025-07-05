@@ -3,132 +3,344 @@
 <head>
     <meta charset="UTF-8">
     <title>访客数据</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap Icons（可选） -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --bg-color: #f4f6f9;
+            --border-color: #ddd;
+            --hover-color: #eaf4ff;
+            --button-approve: #28a745;
+            --button-disapprove: #dc3545;
+            --button-delete: #6c757d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: var(--bg-color);
+            animation: fadeInOutBackground 15s infinite;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        @keyframes fadeInOutBackground {
+            0%, 33% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            33%, 66% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            66%, 99% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991036275448.jpg');
+            }
+            99%, 100% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 30, 30, 0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            background: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: black;
+            margin-bottom: 30px;
+        }
+
+        .logout-btn {
+            display: block;
+            margin: 0 auto 20px;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .logout-btn:hover {
+            background-color: #1a242f;
+        }
+
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-top: 10px;
+            font-size: 15px;
         }
+
         th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
+            text-align: center;
+            border: 1px solid var(--border-color);
         }
+
         th {
-            background-color: #f2f2f2;
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: var(--hover-color);
+        }
+
+        .action-btn {
+            padding: 5px 12px;
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .approve-btn {
+            background-color: var(--button-approve);
+        }
+
+        .disapprove-btn {
+            background-color: var(--button-disapprove);
+        }
+
+        .delete-btn {
+            background-color: var(--button-delete);
+        }
+
+        @media (max-width: 768px) {
+            th, td {
+                font-size: 13px;
+                padding: 8px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .action-btn {
+                padding: 4px 10px;
+                font-size: 13px;
+            }
         }
     </style>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            fetch('/api/data/FindVisitor')
-                .then(response => response.json())
-                .then(data => {
-                    const visitorTable = document.getElementById('visitor-table').getElementsByTagName('tbody')[0];
-                    data.forEach(visitor => {
-                        const row = visitorTable.insertRow();
-                        const idCell = row.insertCell(0);
-                        const departmentNameCell = row.insertCell(1);
-                        const createdAtCell = row.insertCell(2);
-                        const carIdCell = row.insertCell(3);
-                        const nameIDCell = row.insertCell(4);
-                        const nameCell = row.insertCell(5);
-                        const phonenumCell = row.insertCell(6);
-                        const reasonCell = row.insertCell(7);
-                        const requestAtCell = row.insertCell(8);
-                        const approveCell = row.insertCell(9);
-                        const actionCell = row.insertCell(10); // 新增操作栏单元格
-
-                        idCell.textContent = visitor.id;
-                        departmentNameCell.textContent = visitor.departmentName;
-                        createdAtCell.textContent = visitor.created_at;
-                        carIdCell.textContent = visitor.carId || 'N/A';
-                        nameIDCell.textContent = visitor.nameID;
-                        nameCell.textContent = visitor.name;
-                        phonenumCell.textContent = visitor.phonenum;
-                        reasonCell.textContent = visitor.reason;
-                        requestAtCell.textContent = visitor.request_at || 'N/A';
-                        approveCell.textContent = visitor.approve === 0 ? '不同意' : '同意';
-
-                        // 创建操作栏按钮
-                        const approveButton = document.createElement('button');
-                        approveButton.textContent = '同意';
-                        approveButton.onclick = () => approve(visitor.id, '1', 'T');
-
-                        const disapproveButton = document.createElement('button');
-                        disapproveButton.textContent = '不同意';
-                        disapproveButton.onclick = () => approve(visitor.id, '1', 'F');
-
-                        const deleteButton = document.createElement('button');
-                        deleteButton.textContent = '删除';
-                        deleteButton.onclick = () => del(visitor.id);
-
-                        // 将按钮添加到操作栏单元格
-                        actionCell.appendChild(approveButton);
-                        actionCell.appendChild(disapproveButton);
-                        actionCell.appendChild(deleteButton);
-                    });
-                })
-                .catch(error => console.error('Error fetching visitor data:', error));
-        });
-
-        function approve(id, level, status) {
-            let endpoint = `/api/approve${level}${status}/${id}`;
-            fetch(endpoint, { method: 'PUT' })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload(); // 刷新页面以更新数据
-                    } else {
-                        console.error('Approve failed');
-                    }
-                })
-                .catch(error => console.error('Error during approve:', error));
-        }
-
-        function del(id) {
-            fetch(`/api/del/${id}`, { method: 'PUT' })
-                .then(response => {
-                    if (response.ok) {
-                        location.reload(); // 刷新页面以更新数据
-                    } else {
-                        console.error('Delete failed');
-                    }
-                })
-                .catch(error => console.error('Error during delete:', error));
-        }
-
-        function logout() {
-            fetch('/logout', { method: 'POST' })
-                .then(response => {
-                    if (response.ok) {
-                        window.location.href = '/login.html'; // 登出成功后重定向到登录页面
-                    } else {
-                        console.error('Logout failed');
-                    }
-                })
-                .catch(error => console.error('Error during logout:', error));
-        }
-    </script>
 </head>
 <body>
-<h1>访客数据</h1>
-<button onclick="logout()">登出</button>
-<table id="visitor-table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>部门名称</th>
-        <th>创建时间</th>
-        <th>车牌号</th>
-        <th>姓名ID</th>
-        <th>姓名</th>
-        <th>电话号码</th>
-        <th>原因</th>
-        <th>请求时间</th>
-        <th>是否同意</th>
-        <th>操作</th> <!-- 新增操作栏表头 -->
-    </tr>
-    </thead>
-    <tbody>
-    <!-- 数据将插入到这里 -->
-    </tbody>
-</table>
+
+<!-- 背景遮罩层 -->
+<div class="background-overlay"></div>
+
+<div class="container">
+    <h1><i class="bi bi-people"></i> 访客数据</h1>
+    <button class="logout-btn" onclick="logout()">登出</button>
+    <div style="margin-bottom: 20px; text-align: center;">
+        <label for="dateFilter" style="font-weight: bold; margin-right: 10px;">选择日期：</label>
+        <select id="dateFilter" class="form-control" style="display: inline-block; width: auto; padding: 6px 12px;">
+            <option value="">全部</option>
+        </select>
+    </div>
+    <table id="visitor-table">
+        <thead>
+        <tr>
+            <th>访问部门</th>
+            <th>车牌号</th>
+            <th>身份证</th>
+            <th>姓名</th>
+            <th>电话号码</th>
+            <th>原因</th>
+            <th>入校时间</th>
+            <th>是否同意</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- 数据将插入这里 -->
+        </tbody>
+    </table>
+</div>
+
+<script>    document.addEventListener('DOMContentLoaded', function () {
+    const tableBody = document.getElementById('visitor-table').getElementsByTagName('tbody')[0];
+    let allData = []; // 存储原始数据用于过滤
+
+    fetch('/api/data/FindVisitor')
+        .then(response => response.json())
+        .then(data => {
+            allData = data;
+
+            // 提取并填充下拉选项
+            const dateSet = new Set();
+            allData.forEach(visitor => {
+                if (visitor.request_at) {
+                    const dateStr = visitor.request_at.split(' ').slice(0, 3).join(' '); // "Thu Jun 05"
+                    dateSet.add(dateStr);
+                }
+            });
+
+            const dateFilter = document.getElementById('dateFilter');
+            [...dateSet].sort().forEach(date => {
+                const option = document.createElement('option');
+                option.value = option.textContent = date;
+                dateFilter.appendChild(option);
+            });
+
+            // 默认加载所有数据
+            renderTable(allData);
+        })
+        .catch(error => console.error('Error fetching visitor data:', error));
+
+    // 下拉框变化时触发筛选
+    document.getElementById('dateFilter').addEventListener('change', function () {
+        const selectedDate = this.value.trim();
+        if (!selectedDate) {
+            renderTable(allData); // 显示全部
+        } else {
+            const filtered = allData.filter(visitor => {
+                return visitor.request_at && visitor.request_at.startsWith(selectedDate);
+            });
+            renderTable(filtered);
+        }
+    });
+
+    // 渲染表格函数
+    function renderTable(data) {
+        tableBody.innerHTML = '';
+        data.forEach(visitor => {
+            const row = tableBody.insertRow();
+
+            row.insertCell(0).textContent = visitor.departmentName || 'N/A';
+            row.insertCell(1).textContent = visitor.carId || 'N/A';
+            row.insertCell(2).textContent = visitor.nameID;
+            row.insertCell(3).textContent = visitor.name;
+            row.insertCell(4).textContent = visitor.phonenum;
+            row.insertCell(5).textContent = visitor.reason;
+            row.insertCell(6).textContent = visitor.request_at || 'N/A';
+            row.insertCell(7).textContent = visitor.approve === 3 ? '同意' : '不同意';
+
+            const actionCell = row.insertCell(8);
+
+            const approveBtn = document.createElement('button');
+            approveBtn.textContent = '同意';
+            approveBtn.className = 'btn btn-approve';
+            approveBtn.onclick = () => approve(visitor.id, '2', 'T');
+
+            const disapproveBtn = document.createElement('button');
+            disapproveBtn.textContent = '不同意';
+            disapproveBtn.className = 'btn btn-reject';
+            disapproveBtn.onclick = () => approve(visitor.id, '2', 'F');
+
+            const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = '删除';
+            deleteBtn.className = 'btn btn-delete';
+            deleteBtn.onclick = () => del(visitor.id);
+
+            actionCell.append(approveBtn, disapproveBtn, deleteBtn);
+        });
+    }
+
+    function approve(id, level, status) {
+        fetch(`/api/approve${level}${status}/${id}`, { method: 'PUT' })
+            .then(response => {
+                if (response.ok) location.reload();
+                else console.error('Approve failed');
+            })
+            .catch(error => console.error('Error during approve:', error));
+    }
+
+    function del(id) {
+        fetch(`/api/del/${id}`, { method: 'PUT' })
+            .then(response => {
+                if (response.ok) location.reload();
+                else console.error('Delete failed');
+            })
+            .catch(error => console.error('Error during delete:', error));
+    }
+
+    function logout() {
+        fetch('/logout', { method: 'POST' })
+            .then(response => {
+                if (response.ok) window.location.href = '/login.html';
+                else console.error('Logout failed');
+            })
+            .catch(error => console.error('Error during logout:', error));
+    }
+});
+</script>
+<footer class="footer wow fadeInUp" id="contact" style="background-color: #f8f8f8; padding: 50px 0; border-top: 1px solid #ddd;">
+    <div class="container">
+        <div class="layui-row layui-col-space40">
+            <!-- 关于我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">关于我们</h3>
+                    <p style="font-size: 14px; color: #666;">本系统为哈尔滨广厦学院外来人员管理系统，旨在提升校园安全与访客信息管理效率。</p>
+                </div>
+            </div>
+
+            <!-- 联系我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">联系我们</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px; color: #666;">
+                        <li><i class="fa fa-map" style="margin-right: 6px; color: #1E9FFF;"></i>哈尔滨市呼兰区学院路1号</li>
+                        <li><i class="fa fa-qq" style="margin-right: 6px; color: #e00;"></i>QQ：834888615</li>
+                        <li><i class="fa fa-envelope" style="margin-right: 6px; color: #FF5722;"></i>邮箱：83488615@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 友情链接 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">友情链接</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px;">
+                        <li><a href="https://www.gsxy.cn/" target="_blank" style="color: #666;">广厦学院官网</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权栏 -->
+        <div style="text-align: center; margin-top: 40px; font-size: 13px; color: #999;">
+            &copy; 2025 哈尔滨广厦学院 | 外来人员管理系统 版权所有 黑ICP备2025040065号
+        </div>
+    </div>
+</footer>
 </body>
 </html>

@@ -14,7 +14,6 @@ public class DepartmentService {
     private final DepartmentDAOImpl departmentDAOImpl;
     @Autowired
     private DepartmentRepository departmentRepository;
-
     @Autowired
     public DepartmentService(DepartmentDAOImpl departmentDAOImpl) {
         this.departmentDAOImpl = departmentDAOImpl;

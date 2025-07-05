@@ -1,120 +1,212 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>访客登录测试 & 公告</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>访客信息填写</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-        }
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        input[type="text"], select {
-            width: 100%;
-            padding: 8px;
+        * {
             box-sizing: border-box;
         }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            animation: fadeInOutBackground 15s infinite;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        @keyframes fadeInOutBackground {
+            0%, 33% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            33%, 66% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            66%, 99% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991036275448.jpg');
+            }
+            99%, 100% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 30, 30, 0.4); /* 灰色遮罩 */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            margin: 60px auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.2s ease;
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
         button {
-            padding: 10px 20px;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
             background-color: #007bff;
             color: white;
             border: none;
+            border-radius: 8px;
             cursor: pointer;
+            transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #0056b3;
         }
+
         .response {
             margin-top: 20px;
-            padding: 10px;
+            padding: 15px;
             background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 4px;
+            border-left: 4px solid #007bff;
+            border-radius: 6px;
+            color: #333;
+            font-size: 14px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 30px 15px;
+            }
         }
     </style>
 </head>
 <body>
+
+<!-- 灰色遮罩层 -->
+<div class="background-overlay"></div>
+
 <div class="container">
-    <h1>访客登录测试 & 公告</h1>
-
+    <h1>访客登录信息填写</h1>
     <form id="visitorForm">
-        <label for="name">姓名:</label>
-        <input type="text" id="name" name="name" required><br><br>
-
-        <label for="reason">来访原因:</label>
-        <input type="text" id="reason" name="reason" required><br><br>
-
-        <label for="carID">车牌号:</label>
-        <input type="text" id="carID" name="carID"><br><br>
-
-        <label for="phonenum">手机号:</label>
-        <input type="text" id="phonenum" name="phonenum"><br><br>
-
-        <label for="nameId">身份证号:</label>
-        <input type="text" id="nameId" name="nameId"><br><br>
-
-        <label for="requestAt">访问时间:</label>
-        <input type="text" id="requestAt" name="requestAt"><br><br>
-
-        <label for="departmentName">所属学院:</label>
-        <select id="departmentName" name="departmentName" required>
-            <!-- 选项将通过JavaScript动态添加 -->d
-        </select><br><br>
-
+        <div class="form-group">
+            <label for="name">姓名</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="reason">来访原因</label>
+            <input type="text" id="reason" name="reason" required>
+        </div>
+        <div class="form-group">
+            <label for="carID">车牌号</label>
+            <input type="text" id="carID" name="carID">
+        </div>
+        <div class="form-group">
+            <label for="phonenum">手机号</label>
+            <input type="text" id="phonenum" name="phonenum">
+        </div>
+        <div class="form-group">
+            <label for="nameId">身份证号</label>
+            <input type="text" id="nameId" name="nameId">
+        </div>
+        <div class="form-group">
+            <label for="requestAt">访问时间</label>
+            <select id="requestAt" name="requestAt" required>
+                <option value="">请选择时间</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="departmentName">所属学院</label>
+            <select id="departmentName" name="departmentName" required>
+                <!-- 动态加载 -->
+            </select>
+        </div>
         <button type="submit">提交</button>
     </form>
-
-    <div class="response" id="result"></div>
-
-    <div class="response" id="adResponse"></div>
+    <div id="result" class="response" style="display:none;"></div>
 </div>
 
 <script>
     document.getElementById('visitorForm').addEventListener('submit', function(event) {
         event.preventDefault();
-
-        const name = document.getElementById('name').value;
-        const reason = document.getElementById('reason').value;
-        const carID = document.getElementById('carID').value;
-        const phonenum = document.getElementById('phonenum').value;
-        const nameId = document.getElementById('nameId').value;
-        const requestAt = document.getElementById('requestAt').value;
-        const departmentName = document.getElementById('departmentName').value;
-
         const visitorRequest = {
-            name: name,
-            carID: carID,
-            reason: reason,
-            phonenum: phonenum,
-            nameId: nameId,
-            request_at: requestAt,
-            department_name: departmentName
+            name: document.getElementById('name').value,
+            reason: document.getElementById('reason').value,
+            carID: document.getElementById('carID').value,
+            phonenum: document.getElementById('phonenum').value,
+            nameId: document.getElementById('nameId').value,
+            request_at: document.getElementById('requestAt').value,
+            department_name: document.getElementById('departmentName').value
         };
-
         fetch('/api/visitor', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(visitorRequest)
         })
             .then(response => response.json())
             .then(data => {
-                document.getElementById('result').innerText = '添加成功: ' + JSON.stringify(data);
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = '添加成功：' + JSON.stringify(data, null, 2);
+
+                alert('访客信息提交成功！');
+
+                // 清空表单
+                this.reset();
             })
             .catch(error => {
-                document.getElementById('result').innerText = '添加失败: ' + error.message;
+                const resultDiv = document.getElementById('result');
+                resultDiv.style.display = 'block';
+                resultDiv.textContent = '添加失败：' + error.message;
+
+                alert('提交失败，请稍后重试。');
             });
     });
 
@@ -123,24 +215,24 @@
             .then(response => response.json())
             .then(data => {
                 const message = data.message || '暂无公告';
-                document.getElementById('adResponse').innerText = message;
+                // 可以在页面某处显示公告，这里暂时无展示元素
+                console.log('公告:', message);
             })
             .catch(error => {
-                document.getElementById('adResponse').innerText = '请求失败: ' + error;
+                console.error('请求公告失败:', error);
             });
     }
 
-    // 获取学院列表并填充到下拉菜单
     function populateDepartments() {
         fetch('/api/departments/list')
             .then(response => response.json())
             .then(data => {
-                const selectElement = document.getElementById('departmentName');
-                data.forEach(department => {
+                const select = document.getElementById('departmentName');
+                data.forEach(dept => {
                     const option = document.createElement('option');
-                    option.value = department.department_name;
-                    option.text = department.department_name;// 假设返回的每个部门对象都有一个'name'属性
-                    selectElement.appendChild(option);
+                    option.value = dept.department_name;
+                    option.textContent = dept.department_name;
+                    select.appendChild(option);
                 });
             })
             .catch(error => {
@@ -148,11 +240,77 @@
             });
     }
 
-    // 页面加载时自动调用 getAd 和 populateDepartments 函数
-    window.onload = () => {
+    window.onload = function() {
         getAd();
         populateDepartments();
     };
+    function populateTimeOptions() {
+        const select = document.getElementById('requestAt');
+        const now = new Date();
+        const optionsCount = 48; // 显示未来 48 小时的时间
+
+        for (let i = 0; i < optionsCount; i++) {
+            const futureTime = new Date(now.getTime() + i * 60 * 60 * 1000); // 每小时递增
+            const year = futureTime.getFullYear();
+            const month = String(futureTime.getMonth() + 1).padStart(2, '0'); // 月份从 0 开始
+            const day = String(futureTime.getDate()).padStart(2, '0');
+            const hours = String(futureTime.getHours()).padStart(2, '0');
+
+            const displayText = `${year} ${month} ${day} ${hours}:00`;
+            const value = displayText;
+
+            const option = document.createElement('option');
+            option.value = value;
+            option.textContent = displayText;
+            select.appendChild(option);
+        }
+    }
+
+    window.onload = function () {
+        getAd();
+        populateDepartments();
+        populateTimeOptions(); // 新增：加载时间下拉选项
+    };
 </script>
+<footer class="footer wow fadeInUp" id="contact" style="background-color: #f8f8f8; padding: 50px 0; border-top: 1px solid #ddd;">
+    <div class="container">
+        <div class="layui-row layui-col-space40">
+            <!-- 关于我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">关于我们</h3>
+                    <p style="font-size: 14px; color: #666;">本系统为哈尔滨广厦学院外来人员管理系统，旨在提升校园安全与访客信息管理效率。</p>
+                </div>
+            </div>
+
+            <!-- 联系我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">联系我们</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px; color: #666;">
+                        <li><i class="fa fa-map" style="margin-right: 6px; color: #1E9FFF;"></i>哈尔滨市呼兰区学院路1号</li>
+                        <li><i class="fa fa-qq" style="margin-right: 6px; color: #e00;"></i>QQ：834888615</li>
+                        <li><i class="fa fa-envelope" style="margin-right: 6px; color: #FF5722;"></i>邮箱：83488615@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 友情链接 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">友情链接</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px;">
+                        <li><a href="https://www.gsxy.cn/" target="_blank" style="color: #666;">广厦学院官网</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部版权栏 -->
+        <div style="text-align: center; margin-top: 40px; font-size: 13px; color: #999;">
+            &copy; 2025 哈尔滨广厦学院 | 外来人员管理系统 版权所有 黑ICP备2025040065号
+        </div>
+    </div>
+</footer>
 </body>
 </html>

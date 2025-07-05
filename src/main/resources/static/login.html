@@ -8,9 +8,36 @@
     <link href="css/index_style.css" rel="stylesheet" type="text/css">
     <link href="css/animate.min.css" rel="stylesheet" type="text/css">
     <link href="css/lstyles.css" rel="stylesheet" type="text/css">
-    <title>Login Page</title>
+    <title>哈尔滨广厦学院外来人员管理系统</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 30vh;
+            background: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        .title-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 50px;
+            font-weight: bold;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+            text-align: center;
+            z-index: 10;
+        }
+    </style>
 </head>
 <body>
+<div class="title-overlay">
+    哈尔滨广厦学院外来人员管理系统
+</div>
 <section class="section" id="section1">
     <div class="fp-tablecell">
         <div class="login-box">
@@ -30,35 +57,47 @@
         </div>
     </div>
 </section>
-<footer class="footer wow fadeInUp" id="contact">
-    <div class="footer-top">
-        <div class="container">
-            <div class="layui-row">
-                <div class="layui-col-xs12 layui-col-sm6 layui-col-md4">
-                    <div class="single-widget about">
-                        <div class="footer-logo">
-                            <h2>GSXY</h2>
-                        </div>
-                        <p>致谢我闲暇时光</p>
-                        <div class="button">
-                            <a href="#" class="btn layui-btn layui-btn-normal">关于我</a>
-                        </div>
-                    </div>
+<footer class="footer wow fadeInUp" id="contact" style="background-color: #f8f8f8; padding: 50px 0; border-top: 1px solid #ddd;">
+    <div class="container">
+        <div class="layui-row layui-col-space40">
+            <!-- 关于我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">关于我们</h3>
+                    <p style="font-size: 14px; color: #666;">本系统为哈尔滨广厦学院外来人员管理系统，旨在提升校园安全与访客信息管理效率。</p>
                 </div>
-                <div class="layui-col-xs12 layui-col-sm12 layui-col-md4">
-                    <div class="single-widget contact">
-                        <h2>联系我</h2>
-                        <ul class="list">
-                            <li><i class="fa fa-map"></i>地址:-------------------</li>
-                            <li><i class="fa fa-qq"></i>QQ: 834888615 </li>
-                            <li><i class="fa fa-envelope"></i>邮箱: 834888615@qq.com</li>
-                        </ul>
-                    </div>
+            </div>
+
+            <!-- 联系我们 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">联系我们</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px; color: #666;">
+                        <li><i class="fa fa-map" style="margin-right: 6px; color: #1E9FFF;"></i>哈尔滨市呼兰区学院路1号</li>
+                        <li><i class="fa fa-qq" style="margin-right: 6px; color: #e00;"></i>QQ：834888615</li>
+                        <li><i class="fa fa-envelope" style="margin-right: 6px; color: #FF5722;"></i>邮箱：83488615@qq.com</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- 友情链接 -->
+            <div class="layui-col-xs12 layui-col-sm6 layui-col-md3">
+                <div class="footer-widget">
+                    <h3 style="font-weight: bold; color: #333;">友情链接</h3>
+                    <ul style="list-style: none; padding: 0; font-size: 14px;">
+                        <li><a href="https://www.gsxy.cn/" target="_blank" style="color: #666;">广厦学院官网</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
+
+        <!-- 底部版权栏 -->
+        <div style="text-align: center; margin-top: 40px; font-size: 13px; color: #999;">
+            &copy; 2025 哈尔滨广厦学院 | 外来人员管理系统 版权所有 黑ICP备2025040065号
+        </div>
     </div>
 </footer>
+
 <script src="./layui/layui.js"></script>
 <script src="./js/index.js"></script>
 <script src="./js/wow.min.js"></script>

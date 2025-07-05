@@ -32,7 +32,15 @@ public class DataController {
     // 查询所有访客
     @GetMapping("/FindVisitor")
     public List<DataEntity> getVisitors(@AuthenticationPrincipal CustomUserDetails userDetails) {
-        return visitorDataService.findVisitorData(userDetails.getUser().getDepartment_name(), userDetails.getUser().getLevel());
+        List<DataEntity> visitors = visitorDataService.findVisitorData(userDetails.user().getDepartment_name(), userDetails.user().getLevel());
+        if(userDetails.user().getLevel()==3){
+            visitors.replaceAll(visitor -> {
+                visitor.setPhonenum(visitor.getPhonenum().substring(0, 3) + "****" + visitor.getPhonenum().substring(7));
+                visitor.setNameID(visitor.getNameID().substring(0, 3) + "****" + visitor.getNameID().substring(14));
+                return visitor;
+            });
+        }
+        return visitors;
     }
     //查找固定访客
     @GetMapping("/FindVisitorByOpenId")

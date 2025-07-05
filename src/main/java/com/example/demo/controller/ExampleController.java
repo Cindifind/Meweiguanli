@@ -61,11 +61,17 @@ public class ExampleController {
         authorityService.addUserAuthorities(userAuthorities);
         return ResultConst.success();
     }
+    @PutMapping("/api/enabledF/{id}")
+    public ResultConst updateEnabledToFalse(@PathVariable("id") int id) {
+        exampleService.updateEnabledValue(id, 0);
+        authorityService.deleteUserAuthorities(id);
+        return ResultConst.success();
+    }
     //删除管理员
     @DeleteMapping("/api/delUsers/{id}")
     public ResultConst deleteUser(@PathVariable("id") int id) {
         exampleService.deleteUserById(id);
         return ResultConst.success();
-
     }
+
 }

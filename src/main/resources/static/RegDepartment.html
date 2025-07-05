@@ -1,30 +1,155 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Department Registration Test</title>
+    <title>部门注册</title>
+    <!-- Bootstrap & 图标 -->
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcdn.net/ajax/libs/bootstrap-icons/1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', 'Microsoft YaHei', sans-serif;
+            background-color: #f4f6f9;
+            animation: fadeInOutBackground 15s infinite;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        @keyframes fadeInOutBackground {
+            0%, 33% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            33%, 66% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            66%, 99% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991036275448.jpg');
+            }
+            99%, 100% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+        }
+
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 30, 30, 0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 80px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]:focus, select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #1f618d;
+        }
+
+        #response {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px 15px;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>Department Registration Test</h1>
-<form id="registrationForm">
-    <label for="departmentName">Department Name:</label>
-    <input type="text" id="departmentName" name="departmentName" required><br><br>
 
-    <label for="level">Level:</label>
-    <select id="level" name="level" required>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-    </select><br><br>
+<!-- 动态背景遮罩 -->
+<div class="background-overlay"></div>
 
-    <button type="submit">Register Department</button>
-</form>
+<div class="container">
+    <h1><i class="bi bi-building-add"></i>部门注册</h1>
+    <form id="registrationForm">
+        <label for="departmentName">部门名称：</label>
+        <input type="text" id="departmentName" name="departmentName" placeholder="请输入部门名称" required>
 
-<div id="response"></div>
+        <label for="level">级别：</label>
+        <select id="level" name="level" required>
+            <option value="1">一级</option>
+            <option value="2">二级</option>
+            <option value="3">三级</option>
+        </select>
+
+        <button type="submit">提交注册</button>
+
+        <div id="response"></div>
+    </form>
+</div>
 
 <script>
-    document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    document.getElementById('registrationForm').addEventListener('submit', function (event) {
         event.preventDefault();
 
         const departmentName = document.getElementById('departmentName').value;
@@ -45,11 +170,19 @@
             .then(response => response.json())
             .then(result => {
                 document.getElementById('response').innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+
+                // 注册成功弹窗提示
+                alert('部门注册成功！');
+
+                // 清空表单
+                this.reset();
             })
             .catch(error => {
-                document.getElementById('response').innerHTML = `<pre>Error: ${error}</pre>`;
+                document.getElementById('response').innerHTML = `<pre>提交失败: ${error}</pre>`;
+                alert('注册失败，请稍后重试。');
             });
     });
 </script>
+
 </body>
 </html>

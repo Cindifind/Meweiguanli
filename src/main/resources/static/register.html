@@ -1,52 +1,194 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>添加用户</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>添加新用户</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            animation: fadeInOutBackground 15s infinite;
+            background-size: 100% 100%;
+            background-attachment: fixed;
+            position: relative;
+        }
+
+        /* 背景图轮播动画 */
+        @keyframes fadeInOutBackground {
+            0%, 33% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            33%, 66% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+            66%, 99% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991036275448.jpg');
+            }
+            99%, 100% {
+                background-image: url('https://www.gsxy.cn/rootimages/2022/06/01/1651991035437824.jpg');
+            }
+        }
+
+        /* 灰蒙蒙遮罩层 */
+        .background-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 30, 30, 0.4); /* 灰色遮罩 */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 480px;
+            margin: 60px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 1; /* 确保覆盖在灰色遮罩之上 */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            color: #333;
+            font-family: monospace;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                margin: 30px 15px;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-<h1>添加新用户</h1>
-<form id="userForm">
-    <label for="username">用户名:</label>
-    <input type="text" id="username" name="username" required><br><br>
 
-    <label for="password">密码:</label>
-    <input type="password" id="password" name="password" required><br><br>
+<!-- 灰色遮罩层 -->
+<div class="background-overlay"></div>
 
-    <label for="department">部门名称:</label>
-    <select id="department" name="department" required>
-        <!-- 部门选项将通过 JavaScript 动态加载 -->
-    </select><br><br>
+<div class="container">
+    <h1>添加新用户</h1>
+    <form id="userForm">
+        <label for="username">用户名：</label>
+        <input type="text" id="username" name="username" placeholder="请输入用户名" required />
 
-    <label for="user">用户信息:</label>
-    <input type="text" id="user" name="user" required><br><br>
+        <label for="password">密码：</label>
+        <input type="password" id="password" name="password" placeholder="请输入密码" required />
 
-    <button type="submit">添加用户</button>
-</form>
+        <label for="department">所属部门：</label>
+        <select id="department" name="department" required>
+            <option value="" disabled selected>请选择部门</option>
+        </select>
 
-<div id="result"></div>
+        <label for="user">用户信息：</label>
+        <input type="text" id="user" name="user" placeholder="请输入用户信息" required />
+
+        <button type="submit">添加用户</button>
+    </form>
+
+    <a href="login.html">返回登录</a>
+
+    <div id="result"></div>
+</div>
 
 <script>
-    // 获取部门列表并填充下拉栏
+    // 获取部门列表并填充下拉框
     fetch('/api/departments/listAll')
         .then(response => response.json())
         .then(departments => {
             const departmentSelect = document.getElementById('department');
-
-            departments.forEach(department => {
+            departments.forEach(dept => {
                 const option = document.createElement('option');
-                option.value = department.id; // 假设 department 对象中有 id 属性
-                option.dataset.level = department.level; // 存储 level 值
-                option.textContent = department.department_name; // 假设 department 对象中有 department_name 属性
+                option.value = dept.id;
+                option.dataset.level = dept.level;
+                option.textContent = dept.department_name;
                 departmentSelect.appendChild(option);
             });
         })
         .catch(error => {
-            console.error('Error fetching departments:', error);
+            console.error('获取部门失败:', error);
         });
 
+    // 提交表单
     document.getElementById('userForm').addEventListener('submit', function(event) {
-        event.preventDefault(); // 阻止表单默认提交行为
+        event.preventDefault();
 
         const formData = new FormData(this);
         const departmentSelect = document.getElementById('department');
@@ -55,9 +197,9 @@
         const userData = {
             username: formData.get('username'),
             password: formData.get('password'),
-            department_name: selectedOption.textContent, // 获取部门名称
+            department_name: selectedOption.textContent,
             user: formData.get('user'),
-            level: parseInt(selectedOption.dataset.level) // 获取 level 值
+            level: parseInt(selectedOption.dataset.level)
         };
 
         fetch('/api/AddUsers', {
@@ -70,12 +212,20 @@
             .then(response => response.text())
             .then(data => {
                 document.getElementById('result').innerText = data;
+
+                // 弹窗提示添加成功
+                alert('用户添加成功！');
+
+                // 清空表单
+                this.reset();
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('添加失败:', error);
                 document.getElementById('result').innerText = '发生错误，请重试';
+                alert('添加用户失败，请稍后重试。');
             });
     });
 </script>
+
 </body>
 </html>

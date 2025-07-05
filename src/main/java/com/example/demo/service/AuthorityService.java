@@ -18,4 +18,7 @@ public class AuthorityService {
     public void addUserAuthorities(UserAuthorities userAuthorities) {
         userAuthoritiesDAOImpl.insertUserAuthorities(userAuthorities);
     }
+    public void deleteUserAuthorities(int userId) {
+        userAuthoritiesDAOImpl.deleteUserAuthorities(userId);
+    }
 }

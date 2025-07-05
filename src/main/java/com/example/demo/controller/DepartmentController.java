@@ -35,4 +35,5 @@ public class DepartmentController {
         departmentService.deleteDepartmentById(id);
         return Result.SUCCESS;
     }
+
 }
